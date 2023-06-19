@@ -1,0 +1,250 @@
+﻿@model Web_RealEstate.Models.Property
+
+@{
+    ViewData["Title"] = "Property Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--/ Intro Single star /-->
+<section class="intro-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">@Model.Name</h1>
+                    <span class="color-text-a">@Model.Location.Name</span> <!-- Location-->
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-area="" asp-controller="Home" asp-action="AllProperties">All Properties</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Model.Category.Name
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Intro Single End /-->
+
+<!--/ Property Single Star /-->
+<section class="property-single nav-arrow-b">
+
+    <div class="container">
+        <div class="row">
+            <!-- put foreach-->
+            @foreach (var post in Model.Posts)
+            {
+                <div class="col-sm-12">
+                    <div id="property-single-carousel" class="owl-carousel owl-arrow gallery-property">
+                        <div class="carousel-item-b">
+                            <img src="~/img/@Model.Image" alt="">
+                        </div>
+                        <div class="carousel-item-b">
+                            <img src="~/img/slide-3.jpg" alt="">
+                        </div>
+                        <div class="carousel-item-b">
+                            <img src="~/img/slide-1.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col-md-5 col-lg-4">
+                            <div class="property-price d-flex justify-content-center foo">
+                                <div class="card-header-c d-flex">
+                                    <div class="card-box-ico">
+                                        <span class="ion-money">$</span>
+                                    </div>
+                                    <div class="card-title-c align-self-center">
+                                        <h5 class="title-c">@Model.Price</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="property-summary">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d section-t4">
+                                            <h3 class="title-d"></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="summary-list">
+                                    <ul class="list">                                        
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Seller </strong>
+                                            <span>@post.Seller.Name</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Location:</strong>
+                                            <span>@Model.Location.Name</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Status:</strong>
+                                            <span>@post.Status</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Reasonably</strong>
+                                            <span>
+                                                @post.Low
+                                            </span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Bid</strong>
+                                            <span>@post.High</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Investor</strong>
+                                            <span>@post.RealEstate.ChuDauTu.Name</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-lg-7 section-md-t3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="title-box-d">
+                                        <h3 class="title-d">Property Description</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="property-description">
+                                <p class="description color-text-a">
+                                    @post.Description
+                                </p>                                
+                            </div>
+                            <div class="row section-t3">
+                                <div class="col-sm-12">
+                                    <div class="title-box-d">
+                                        <h3 class="title-d">Amenities</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="amenities-list color-text-a">
+                                <ul class="list-a no-margin">
+                                    <li>Balcony</li>
+                                    <li>Outdoor Kitchen</li>
+                                    <li>Cable Tv</li>
+                                    <li>Deck</li>
+                                    <li>Tennis Courts</li>
+                                    <li>Internet</li>
+                                    <li>Parking</li>
+                                    <li>Sun Room</li>
+                                    <li>Concrete Flooring</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="col-md-10 offset-md-1">
+                <ul class="nav nav-pills-a nav-pills mb-3 section-t3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-video-tab" data-toggle="pill" href="#pills-video" role="tab"
+                           aria-controls="pills-video" aria-selected="true">Video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-plans-tab" data-toggle="pill" href="#pills-plans" role="tab" aria-controls="pills-plans"
+                           aria-selected="false">Floor Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-map-tab" data-toggle="pill" href="#pills-map" role="tab" aria-controls="pills-map"
+                           aria-selected="false">Ubication</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
+                        <iframe src="https://player.vimeo.com/video/73221098" width="100%" height="460" frameborder="0"
+                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                    <div class="tab-pane fade" id="pills-plans" role="tabpanel" aria-labelledby="pills-plans-tab">
+                        <img src="~/img/plan2.jpg" alt="" class="img-fluid">
+                    </div>
+                    <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.547628383837!2d106.66243187496693!3d10.769304859325178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f7c8bf050ff%3A0x4fa87595d124cc0c!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBIb2EgU2VuIC0gQ8ahIHPhu58gVGjDoG5oIFRow6Fp!5e0!3m2!1svi!2s!4v1683122444305!5m2!1svi!2s"
+                                width="100%" height="460" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            @foreach (var post in Model.Posts)
+            {
+                <!-- Agent -->
+                <div class="col-md-12">
+                    <div class="row section-t3">
+                        <div class="col-sm-12">
+                            <div class="title-box-d">
+                                <h3 class="title-d">Contact Agent</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <img src="~/img/@post.Seller.Image" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="property-agent">
+                                <h4 class="title-agent">@post.Seller.Name</h4>
+                                <p class="color-text-a">
+                                    @post.Seller.Address
+                                </p>
+                                <ul class="list-unstyled">                                    
+
+                                    <li class="d-flex justify-content-between">
+                                        <strong>Contact:</strong>
+                                        <span class="color-text-a">@post.Seller.Phone</span>
+                                    </li>
+
+                                    <li class="d-flex justify-content-between">
+                                        <strong>Email:</strong>
+                                        <span class="color-text-a">@post.Seller.Email</span>
+                                    </li>
+
+                                </ul>
+                                <div class="socials-a">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="https://www.facebook.com/conghoaxahoichunghiavietnamdoclaptudohphuc">
+                                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">
+                                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">
+                                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">
+                                                <i class="fa fa-pinterest-p" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#">
+                                                <i class="fa fa-dribbble" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--/ Property Single End /-->

@@ -1,0 +1,109 @@
+@model Web_RealEstate.Models.Admin_Models.AdminModel
+
+@{
+    Layout = "~/Views/shared/_layout_admin.cshtml";
+    ViewBag.title = "Property";
+    ViewBag.active = 2;
+}
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- PROPERTY -->
+                            <div class="card" style="padding-bottom: 30px;">
+                                <div class="card-header" style="margin-bottom: 2%; min-height: 60px;">
+                                    <strong class="card-title mb-3">Property List</strong>
+                                </div>
+                                <table class="mdl-data-table" id="table-property" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Short Description</th>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Price</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var (obj, abs) in Model.MyPost.Zip(Model.MyProp, (obj, abs) => (obj, abs)))
+                                        {
+                                            <tr>
+                                                <td style="width: 12%">
+                                                    <ul class="list-inline">
+                                                        @*<li class="list-inline-item">
+                                                            <img alt="PropertyImage" class="table-avatar"
+                                                                 src="~/img/@obj.RealEstate.Images.ToList()[0].Image1" style="border-radius: 3%; width: 90%">
+                                                        </li>*@
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    @obj.RealEstate.Name
+                                                </td>
+                                                <td>
+                                                    <span class="desc">@obj.ShortDescription</span>
+                                                </td>
+                                                <td>@obj.PublicDate</td>
+                                                <td>
+                                                    @if (abs.CategoryId == 2)
+                                                    {
+                                                        <h4><span class="badge light badge-warning">Project</span></h4>
+                                                    }
+                                                    else if (abs.CategoryId == 3)
+                                                    {
+                                                        <h4><span class="badge light badge-info">Rent</span></h4>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h4><span class="badge light badge-success">Sell</span></h4>
+                                                    }
+                                                </td>
+                                                <td>@obj.Low - @obj.High</td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <button class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Detail">
+                                                            <a asp-area="" asp-controller="Admin" asp-action="PropertyDetail" asp-route-id="@abs.Id">
+                                                                <i class="zmdi zmdi-folder"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Edit">
+                                                            <a asp-area="" asp-controller="Admin" asp-action="EditingProperty" asp-route-id="@abs.Id">
+                                                                <i class="zmdi zmdi-edit">
+                                                                </i>
+                                                            </a>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Delete">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END  DATA-->
+                    </div>
+                    <!-- Footer  -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>
+                                    Copyright © 2023. All rights reserved. Team <a href="#">LPH</a> with love
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>

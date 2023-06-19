@@ -1,0 +1,126 @@
+﻿@model Web_RealEstate.Models.News
+
+@{
+    Layout = "~/Views/shared/_layout_admin.cshtml";
+    ViewBag.title = "NewDetail";
+    ViewBag.active = 4;
+}
+
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <!-- Latest Properties -->
+                <div class="col-lg-12 ">
+                    <div class="card">
+                        <div class="card-header-prop">
+                            <div class="page-titles">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a asp-area="" asp-controller="Admin" asp-action="New">
+                                            News
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        <a asp-area="" asp-controller="Admin" asp-action="NewDetail">
+                                            NewDetail
+                                        </a>
+                                    </li>
+                                </ol>
+                                <button type="submit"
+                                        class="au-btn au-btn-icon au-btn--green au-btn--small float-right">
+                                    <a asp-area="" asp-controller="Admin" asp-action="EditingNew" asp-route-id="@Model.Id" style="color: white">
+                                        <i class="fa fa-dot-circle-o"></i> Update
+                                    </a>
+                                </button>
+                                <button type="reset"
+                                        class="au-btn au-btn-icon au-btn--red au-btn--small float-right"
+                                        style="margin-right: 1%;">
+                                    <a asp-area="" asp-controller="Admin" asp-action="DeleteNew" asp-route-id="@Model.Id" style="color: white">
+                                        <i class="fa fa-ban"></i> Delete
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="post-details">
+                                <h3 class="mb-2 text-black text-xl-left">
+                                    @Model.Title
+                                </h3>
+                                <ul class="mb-4 post-meta d-flex flex-wrap">
+                                    <li class="post-author me-3">By Admin</li>
+                                    <li class="post-date me-3">
+                                        <i class="fa fa-calender"></i>@Model.Date
+                                    </li>
+                                </ul>
+                               @* <img src="~/img/@Model.Images.ToList()[0].Image1" class=" img-fluid mb-3 w-60 rounded mx-auto
+                                            d-block">*@
+                                <blockquote>
+                                    @Model.Contents
+                                </blockquote>
+                                <div class="profile-skills mt-5 mb-5">
+                                    <h4 class="text-primary mb-2">Tag</h4>
+                                    <a href="#" class="btn btn-primary light btn-xs mb-1">Apartment</a>
+                                    <a href="#" class="btn btn-primary light btn-xs mb-1">Trending News</a>
+                                    <a href="#" class="btn btn-primary light btn-xs mb-1">Style</a>
+                                    <a href="#" class="btn btn-primary light btn-xs mb-1">Responsive</a>
+                                    <a href="#" class="btn btn-primary light btn-xs mb-1">House</a>
+                                </div>
+                                <div class="comment-respond" id="respond">
+                                    <h4 class="comment-reply-title text-primary mb-3" id="reply-title">
+                                        Leave
+                                        a
+                                        Reply
+                                    </h4>
+                                    <form class="comment-form" id="commentform" method="post">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="author" class="text-black font-w600">
+                                                        Name
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" value="Author"
+                                                           name="Author" placeholder="Author" id="author">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="email" class="text-black font-w600">
+                                                        Email
+                                                        <span class="required">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" value="Email"
+                                                           placeholder="Email" name="Email" id="email">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="comment"
+                                                           class="text-black font-w600">Comment</label>
+                                                    <textarea rows="8" class="form-control" name="comment"
+                                                              placeholder="Comment" id="comment"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Post Comment"
+                                                           class="submit btn btn-primary" id="submit"
+                                                           name="submit">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

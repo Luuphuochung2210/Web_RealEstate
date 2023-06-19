@@ -1,0 +1,89 @@
+﻿@model Web_RealEstate.Models.News
+
+@{
+    Layout = "~/Views/shared/_layout_admin.cshtml";
+    ViewBag.title = "EditNew";
+    ViewBag.active = 4;
+}
+
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                </div>
+                <div class="row m-t-25">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="page-titles">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Admin" asp-action="New">News</a></li>
+                                        <li class="breadcrumb-item active">
+                                            <a asp-area="" asp-controller="Admin" asp-action="EditNew">Edit News</a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="card-body card-block">
+                                <form asp-action="EditingNew">
+                                    <div class="form-group">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <label class=" form-label">Current New ID :</label>
+                                        <input type="text" asp-for="Id" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Contents" class="control-label"></label>
+                                        <textarea asp-for="Contents" class="form-control" rows="4"></textarea>
+                                        <span asp-validation-for="Contents" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Title" class="control-label"></label>
+                                        <input asp-for="Title" class="form-control" />
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Date" class="control-label"></label>
+                                        <input asp-for="Date" class="form-control" />
+                                        <span asp-validation-for="Date" class="text-danger"></span>
+                                    </div>
+                                    @*<div class="form-group">                                      
+                                            <label for="select" class="control-label">
+                                                Change Category :
+                                            </label>                                       
+                                            <select name="category" id="category" multiple>
+                                                <option value="1">Apartment</option>
+                                                <option value="2">House</option>
+                                                <option value="3">Style</option>
+                                                <option value="4">Rent</option>
+                                                <option value="5">Sell</option>
+                                                <option value="6">Buy</option>
+                                            </select>
+                                    </div>*@
+                                    <hr />
+                                    <div class="d-flex justify-content-between">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary">
+                                                <a asp-area="" asp-controller="Admin" asp-action="New" style="color:white">Back to List</a>
+                                            </button>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Update" class="au-btn au-btn-icon au-btn--green au-btn--small" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    Copyright © 2023. All rights reserved. Team <a asp-area="" asp-controller="Admin" asp-action="index">LPH</a> with love
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
