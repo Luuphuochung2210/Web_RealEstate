@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags-->
@@ -33,7 +32,7 @@
     <link href="~/css_admin/swiper-bundle.min.css" rel="stylesheet" />
     <link href="~/css_admin/multi-tag.css" rel="stylesheet" media="all" />
     <!-- Main CSS-->
-    <link href="~/css_admin/theme.css" rel="stylesheet" media="all" />
+    <link href="~/css_admin/theme.css?rnd=132" rel="stylesheet" media="all" />
 </head>
 <body class="animsition">
     <div class="page-wrapper">
@@ -76,10 +75,18 @@
                                 <i class="fas fa-newspaper"></i>News
                             </a>
                         </li>
-                        <li>
-                            <a asp-area="" asp-controller="Admin" asp-action="calendar">
-                                <i class="fas fa-calendar-alt"></i>Calendar
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-copy"></i>Pages
                             </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a a asp-area="" asp-controller="Admin" asp-action="login">Login</a>
+                                </li>
+                                <li>
+                                    <a a asp-area="" asp-controller="Admin" asp-action="Forgetpass">Forget Password</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -125,10 +132,7 @@
                                     <a a asp-area="" asp-controller="Admin" asp-action="login">Login</a>
                                 </li>
                                 <li>
-                                    <a a asp-area="" asp-controller="Admin" asp-action="register">Register</a>
-                                </li>
-                                <li>
-                                    <a a asp-area="" asp-controller="Admin" asp-action="Forgetpass">Forget Password</a>
+                                    <a a asp-area="" asp-controller="Admin" asp-action="login">Logout</a>
                                 </li>
                             </ul>
                         </li>
@@ -144,39 +148,42 @@
                         <div class="account-wrap">
                             <div class="header-button">
                                 <div class="account-item clearfix js-item-menu">
-                                    <div class="image">
-                                        <img src="~/images/icon/avatar-01.jpg" alt="John Doe" />
-                                    </div>
-                                    <div class="content">
-                                        <a asp-area="" asp-controller="Admin" asp-action="card" class="js-acc-btn">John Doe</a>
-                                    </div>
-                                    <div class="account-dropdown js-dropdown">
-                                        <div class="info clearfix">
-                                            <div class="image">
-                                                <a asp-area="" asp-controller="Admin" asp-action="card">
-                                                    <img src="~/images/icon/avatar-01.jpg" alt="John Doe" />
-                                                </a>
+                                    @if (Context.Session.GetString("UserName") != null && Context.Session.GetString("Email") != null)
+                                    {
+                                        <div class="image">
+                                            <img src="~/images/icon/avatar-06.jpg" alt="John Doe" />
+                                        </div>
+                                        <div class="content">
+                                            <a asp-area="" asp-controller="Admin" asp-action="card" class="js-acc-btn">Hi, @Context.Session.GetString("UserName")</a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a asp-area="" asp-controller="Admin" asp-action="card">
+                                                        <img src="~/images/icon/avatar-06.jpg" alt="John Doe" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a asp-area="" asp-controller="Admin" asp-action="card">@Context.Session.GetString("UserName")</a>
+                                                    </h5>
+                                                    <span class="email">@Context.Session.GetString("Email")</span>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <h5 class="name">
-                                                    <a asp-area="" asp-controller="Admin" asp-action="card">john doe</a>
-                                                </h5>
-                                                <span class="email">johndoe@example.com</span>
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a asp-area="">
+                                                        <i class="zmdi zmdi-account"></i>Account
+                                                    </a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a asp-area="" asp-controller="Admin" asp-action="Login">
+                                                        <i class="zmdi zmdi-power"></i>Logout
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="account-dropdown__body">
-                                            <div class="account-dropdown__item">
-                                                <a asp-area="">
-                                                    <i class="zmdi zmdi-account"></i>Account
-                                                </a>
-                                            </div>
-                                            <div class="account-dropdown__item">
-                                                <a asp-area="" asp-controller="Admin" asp-action="Login">
-                                                    <i class="zmdi zmdi-power"></i>Logout
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -219,7 +226,6 @@
     <!-- Main JS-->
     <script src="~/js_admin/main_admin.js"></script>
     <script src="~/js_admin/swiper.js"></script>
-
     <script>
         $(document).ready(function () {
             $('#table-page').DataTable({

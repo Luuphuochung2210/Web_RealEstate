@@ -1,7 +1,11 @@
+@model Web_RealEstate.Models.Admin
+
 @{
     ViewData["Title"] = "Login";
     Layout = null;
+    var message = TempData["Message"] as string;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,21 +47,36 @@
                     <div class="login-content">
                         <div class="login-logo">
                             <a asp-area="" asp-controller="Admin" asp-action="Login"></a>
-                            <img src="~/images/icon/logo.png" alt="CoolAdmin">
+                            <img src="~/img/logo.jpg" alt="LPH" style="min-height: 5vh; width: 40%">
                             </a>
                         </div>
                         <div class="login-form">
                             <form action="" method="post">
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="email" name="email"
-                                           placeholder="Email">
+                                    <label asp-for="UserName">UserName</label>
+                                    <input asp-for="UserName" class="au-input au-input--full" placeholder="UserName" type="text" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="au-input au-input--full" type="password" name="password"
-                                           placeholder="Password">
+                                    <label asp-for="PassWord">Password</label>
+                                    <input asp-for="PassWord" class="au-input au-input--full" placeholder="Password" type="password" required>
                                 </div>
+                                @if (!string.IsNullOrWhiteSpace(message))
+                                {
+                                    <div id="alertMessage" class="col-md-12 alert alert-danger text-md-center" role="alert">
+                                        @message
+                                    </div>
+
+                                    <script>
+                                        setTimeout(function () {
+                                            $('#alertMessage').fadeOut('slow', function () {
+                                                $(this).remove();
+
+                                                // Remove the message from TempData after the delay
+                                        @TempData.Remove("Message");
+                                            });
+                                        }, 5000);
+                                    </script>
+                                }
                                 <div class="login-checkbox">
                                     <label>
                                         <input type="checkbox" name="remember">Remember Me
@@ -66,9 +85,9 @@
                                         <a asp-area="" asp-controller="Admin" asp-action="ForgetPass">Forgotten Password?</a>
                                     </label>
                                 </div>
+                                <hr />
                                 <button class="au-btn au-btn--block au-btn--green m-p-b-10" type="submit">
-                                    sign
-                                    in
+                                    Sign In
                                 </button>
                             </form>
                         </div>

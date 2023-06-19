@@ -1,8 +1,11 @@
+@model Web_RealEstate.Models.Property
+
 @{
     Layout = "~/Views/shared/_layout_admin.cshtml";
     ViewBag.title = "EditProperty";
     ViewBag.active = 2;
 }
+
 <!-- PAGE CONTAINER-->
 <div class="page-container">
     <!-- MAIN CONTENT-->
@@ -25,89 +28,69 @@
                             <div class="card-body card-block">
                                 <form action="" method="post" enctype="multipart/form-data"
                                       class="form-horizontal">
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label class=" form-control-label">Current Property : </label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <p class="form-control-static">Property 1</p>
-                                        </div>
+                                    <div class="form-group">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <label class=" form-label">Current New ID :</label>
+                                        <input type="text" asp-for="Id" />
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">
-                                                Property Name :
-                                            </label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <input type="text" id="text-input" name="text-input"
-                                                   placeholder="Change property name..." class="form-control">
-                                        </div>
+                                    <div class="form-group">
+                                        <label asp-for="Image" class="control-label">Current Image:</label>
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                        <img src="~/img/@Model.Image" title="" alt="" style="border-radius: 3%; width : 20%;margin-bottom : 15px; display:block">
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">
-                                                Property Budget
-                                                :
-                                            </label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <div class="input-group">
-                                                <input type="number" id="input3-group1" name="input3-group1"
-                                                       placeholder=".." class="form-control">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-usd" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label">Change Title:</label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="textarea-input" class=" form-control-label">
-                                                Description
-                                                :
-                                            </label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <textarea name="textarea-input" id="textarea-input" rows="9"
-                                                      placeholder="Content..." class="form-control"></textarea>
-                                        </div>
+                                    <div class="form-group">
+                                        <label asp-for="Price" class="control-label">Change the Price:</label>
+                                        <input asp-for="Price" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Status : </label>
-                                        </div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="select" id="select" class="form-control">
-                                                <option value="0">Please select</option>
-                                                <option value="1">For Sell</option>
-                                                <option value="2">For Rent</option>
-                                                <option value="3">Sold</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group">
+                                        <label asp-for="CategoryId" class="control-label"></label>
+                                        <input asp-for="CategoryId" class="form-control" placeholder="2-Project 3-Buy 4-Rent"></input>
+                                        <span asp-validation-for="CategoryId" class="text-danger"></span>
                                     </div>
-
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="file-input" class=" form-control-label">
-                                                Image
-                                                input :
-                                            </label>
+                                    <div class="form-group">
+                                        <label asp-for="LocationId" class="control-label"></label>
+                                        <textarea asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId" placeholder="1-Hà Nội
+2-Đà Nẵng
+3-Hồ Chí Minh
+4-Cần Thơ
+5-Ba Đình
+6-Hoàn Kiếm
+7-Sơn Trà
+8-Ngũ Hành Sơn
+9-Quận 1
+10-Quận 2
+11-Ninh Kiều
+12-Cái Răng" rows="12"></textarea>
+                                        <span asp-validation-for="LocationId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ChuDauTuId" class="control-label"></label>
+                                        <input asp-for="ChuDauTuId" class="form-control" asp-items="ViewBag.ChuDauTuId" placeholder="1-NovaLand 2-Vin Group"></input>
+                                        <span asp-validation-for="ChuDauTuId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Image" class="control-label">Change Image:</label>
+                                        <input type="file" asp-for="ImageUpload" class="form-control" />
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                    </div>
+                                    <hr />
+                                    <div class="d-flex justify-content-between">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary">
+                                                <a asp-area="" asp-controller="Admin" asp-action="Property" style="color:white">Back to List</a>
+                                            </button>
                                         </div>
-                                        <div class="col-12 col-md-9">
-                                            <input type="file" id="file-input" name="file-input"
-                                                   class="form-control-file">
+                                        <div class="form-group">
+                                            <input type="submit" value="Update" class="au-btn au-btn-icon au-btn--green au-btn--small" />
                                         </div>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn au-btn--green btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Update
-                                </button>
-                                <button type="reset" class="btn au-btn--red btn-sm">
-                                    <i class="fa fa-ban"></i> Delete
-                                </button>
                             </div>
                         </div>
                         <div class="row">

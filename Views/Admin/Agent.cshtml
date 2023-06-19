@@ -4,6 +4,9 @@
     Layout = "~/Views/shared/_layout_admin.cshtml";
     ViewBag.title = "Agents";
     ViewBag.active = 3;
+    var createmessage = TempData["CreateMessage"]?.ToString();
+    var delmessage = TempData["Message"]?.ToString();
+    var updatemessage = TempData["UpMessage"]?.ToString();
 }
 <!-- PAGE CONTAINER-->
 <div class="page-container">
@@ -18,6 +21,24 @@
                                 <div class="card-header" style="margin-bottom: 2%; min-height: 60px;">
                                     <strong class="card-title mb-3">Agents List</strong>
                                 </div>
+                                @if (!string.IsNullOrWhiteSpace(delmessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @delmessage
+                                    </div>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(updatemessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @updatemessage
+                                    </div>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(createmessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @createmessage
+                                    </div>
+                                }
                                 <table class="mdl-data-table" id="table-page" style="width:100%">
                                     <thead>
                                         <tr>
@@ -37,8 +58,7 @@
                                                 <td style="width: 12%">
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
-                                                            <img alt="User Image" class="table-avatar"
-                                                                 src="~/img/@imgURL" style="border-radius: 3%; width: 100%">
+                                                            <img alt="User Image" src="~/img/@imgURL" class="table-avatar">
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -103,3 +123,13 @@
             </div>
         </div>
     </div>
+    <script>
+        setTimeout(function () {
+            $('#alertMessage').fadeOut('slow', function () {
+                $(this).remove();
+
+                // Remove the message from TempData after the delay
+        @TempData.Remove("Message");
+            });
+        }, 3000);
+    </script>

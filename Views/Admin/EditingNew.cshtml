@@ -30,41 +30,50 @@
                                 </div>
                             </div>
                             <div class="card-body card-block">
-                                <form asp-action="EditingNew">
+                                <form asp-action="EditingNew" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <label class=" form-label">Current New ID :</label>
                                         <input type="text" asp-for="Id" />
                                     </div>
-
                                     <div class="form-group">
-                                        <label asp-for="Contents" class="control-label"></label>
-                                        <textarea asp-for="Contents" class="form-control" rows="4"></textarea>
-                                        <span asp-validation-for="Contents" class="text-danger"></span>
+                                        <label asp-for="Image" class="control-label">Current Image:</label>
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                        <img src="~/img/@Model.Image" title="" alt="" style="border-radius: 3%; width : 20%;margin-bottom : 15px; display:block">
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="Title" class="control-label"></label>
+                                        <label asp-for="Title" class="control-label">Change Title:</label>
                                         <input asp-for="Title" class="form-control" />
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
+                                        <label asp-for="Contents" class="control-label">Change Contents:</label>
+                                        <textarea asp-for="Contents" class="form-control" rows="4"></textarea>
+                                        <span asp-validation-for="Contents" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
                                         <label asp-for="Date" class="control-label"></label>
-                                        <input asp-for="Date" class="form-control" />
+                                        <input asp-for="Date" class="form-control" readonly />
                                         <span asp-validation-for="Date" class="text-danger"></span>
                                     </div>
-                                    @*<div class="form-group">                                      
-                                            <label for="select" class="control-label">
-                                                Change Category :
-                                            </label>                                       
-                                            <select name="category" id="category" multiple>
-                                                <option value="1">Apartment</option>
-                                                <option value="2">House</option>
-                                                <option value="3">Style</option>
-                                                <option value="4">Rent</option>
-                                                <option value="5">Sell</option>
-                                                <option value="6">Buy</option>
-                                            </select>
-                                    </div>*@
+                                    <div class="form-group">
+                                        <label for="select" class="control-label">
+                                            Change Category :
+                                        </label>
+                                        <select name="category" id="category" multiple>
+                                            <option value="1">Apartment</option>
+                                            <option value="2">House</option>
+                                            <option value="3">Style</option>
+                                            <option value="4">Rent</option>
+                                            <option value="5">Sell</option>
+                                            <option value="6">Buy</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Image" class="control-label">Change Image:</label>
+                                        <input type="file" asp-for="ImageUpload" class="form-control" />
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                    </div>
                                     <hr />
                                     <div class="d-flex justify-content-between">
                                         <div class="form-group">

@@ -4,7 +4,11 @@
     Layout = "~/Views/shared/_layout_admin.cshtml";
     ViewBag.title = "Property";
     ViewBag.active = 2;
+    var createmessage = TempData["CreateMessage"]?.ToString();
+    var delmessage = TempData["Message"]?.ToString();
+    var updatemessage = TempData["UpMessage"]?.ToString();
 }
+
 <!-- PAGE CONTAINER-->
 <div class="page-container">
     <!-- MAIN CONTENT-->
@@ -19,6 +23,24 @@
                                 <div class="card-header" style="margin-bottom: 2%; min-height: 60px;">
                                     <strong class="card-title mb-3">Property List</strong>
                                 </div>
+                                @if (!string.IsNullOrWhiteSpace(delmessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @delmessage
+                                    </div>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(updatemessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @updatemessage
+                                    </div>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(createmessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @createmessage
+                                    </div>
+                                }
                                 <table class="mdl-data-table" id="table-property" style="width:100%">
                                     <thead>
                                         <tr>
@@ -27,7 +49,7 @@
                                             <th>Short Description</th>
                                             <th>Date</th>
                                             <th>Type</th>
-                                            <th>Price</th>
+                                            <th>Price range</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -37,16 +59,16 @@
                                             <tr>
                                                 <td style="width: 12%">
                                                     <ul class="list-inline">
-                                                        @*<li class="list-inline-item">
+                                                        <li class="list-inline-item">
                                                             <img alt="PropertyImage" class="table-avatar"
-                                                                 src="~/img/@obj.RealEstate.Images.ToList()[0].Image1" style="border-radius: 3%; width: 90%">
-                                                        </li>*@
+                                                                 src="~/img/@obj.RealEstate.Image" style="border-radius: 3%; width: 100px">
+                                                        </li>
                                                     </ul>
                                                 </td>
-                                                <td>
+                                                <td style="text-transform : capitalize">
                                                     @obj.RealEstate.Name
                                                 </td>
-                                                <td>
+                                                <td style="text-transform : capitalize">
                                                     <span class="desc">@obj.ShortDescription</span>
                                                 </td>
                                                 <td>@obj.PublicDate</td>
@@ -75,14 +97,16 @@
                                                         </button>
                                                         <button class="item" data-toggle="tooltip"
                                                                 data-placement="top" title="Edit">
-                                                            <a asp-area="" asp-controller="Admin" asp-action="EditingProperty" asp-route-id="@abs.Id">
+                                                            <a asp-area="" asp-controller="Admin" asp-action="EditProperty" asp-route-id="@abs.Id">
                                                                 <i class="zmdi zmdi-edit">
                                                                 </i>
                                                             </a>
                                                         </button>
                                                         <button class="item" data-toggle="tooltip"
                                                                 data-placement="top" title="Delete">
-                                                            <i class="zmdi zmdi-delete"></i>
+                                                            <a asp-area="" asp-controller="Admin" asp-action="DeleteProperty" asp-route-id="@obj.Id">
+                                                                <i class="zmdi zmdi-delete"></i>
+                                                            </a>
                                                         </button>
                                                     </div>
                                                 </td>
@@ -107,3 +131,13 @@
             </div>
         </div>
     </div>
+    <script>
+        setTimeout(function () {
+            $('#alertMessage').fadeOut('slow', function () {
+                $(this).remove();
+
+                // Remove the message from TempData after the delay
+        @TempData.Remove("Message");
+            });
+        }, 3000);
+    </script>

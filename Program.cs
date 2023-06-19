@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession();
+
 builder.Services.AddDbContext<Ntphu24072001CnaContext>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefautConnection")
         ));//setup syntax to use DbContext 
@@ -18,6 +20,7 @@ builder.Services.AddTransient<ISellerReposistory, SellerReposistory>();
 builder.Services.AddTransient<IPropertyReposistory, PropertyReposistory>();
 builder.Services.AddTransient<INewsReposistory, NewsReposistory>();
 builder.Services.AddTransient<IUserReposistory, UserReposistory>();
+builder.Services.AddTransient<IAdminReposistory, AdminReposistory>();
 
 var app = builder.Build();
 
@@ -35,6 +38,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

@@ -14,10 +14,14 @@ namespace Web_RealEstate.Reposistory
         public List<News> GetTop3();
 
         public News GetById(int Id);
+
         public void Addnew(News news);
+
         public void EditingNew(News news);
+
         public void DeleteNews(News news);
-        //public string UploadImage(News news);
+
+        public void UploadFile(News news);
     }
 
     public class NewsReposistory : INewsReposistory
@@ -65,6 +69,16 @@ namespace Web_RealEstate.Reposistory
                     existingNew.Date = news.Date;
                     existingNew.Title = news.Title;
 
+                    if (news.ImageUpload != null && news.ImageUpload.Length > 0)
+                    {
+                        if (!string.IsNullOrEmpty(existingNew.Image))
+                        {
+                            DeleteImage(existingNew.Image);
+                        }
+                        existingNew.Image = SaveImage(news.ImageUpload);
+                    }
+                    _ctx.Attach(existingNew);
+                    _ctx.Entry(existingNew).State = EntityState.Modified;
                     _ctx.SaveChanges();
                 }
             }
@@ -78,23 +92,39 @@ namespace Web_RealEstate.Reposistory
                 _ctx.SaveChanges();
             }
         }
-        /*public string UploadImage(News news)
+
+        public void UploadFile(News news)
+        {
+            _ctx.News.Add(news);
+            _ctx.Entry(news).State = EntityState.Added;
+            _ctx.SaveChanges();
+        }
+        private void DeleteImage(string imageName)
+        {
+            string imagePath = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+        }
+
+        private string SaveImage(IFormFile imageFile)
         {
             string uniqueFileName = null;
-            if (news.FrontImage != null)
+
+            if (imageFile != null && imageFile.Length > 0)
             {
-                string uploadFile = Path.Combine(webHostEnvironment.WebRootPath, "img");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + news.FrontImage.FileName;
-                string filePath = Path.Combine(uploadFile, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                string uploadFolder = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                string imageFilePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(imageFilePath, FileMode.Create))
                 {
-                    news.FrontImage.CopyTo(fileStream);
+                    imageFile.CopyTo(fileStream);
                 }
-                _ctx.Attach(news);
-                _ctx.Entry(news).State = EntityState.Added;
-                _ctx.SaveChanges();
             }
+
             return uniqueFileName;
-        }*/
+        }
     }
 }

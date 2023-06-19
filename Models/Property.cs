@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web_RealEstate.Models;
 
@@ -28,4 +30,9 @@ public partial class Property
     public virtual Location Location { get; set; } = null!;
 
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
+
+    [Required(ErrorMessage = "Please choose an Image")]
+    [Display(Name = "Upload Image")]
+    [NotMapped]
+    public IFormFile ImageUpload { get; set; }
 }
