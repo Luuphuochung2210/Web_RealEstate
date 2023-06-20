@@ -48,7 +48,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Contents" class="control-label">Change Contents:</label>
-                                        <textarea asp-for="Contents" class="form-control" rows="4"></textarea>
+                                        <textarea asp-for="Contents" class="form-control" id="message" rows="5"
+                                                  maxlength="500" placeholder="Your contents..."></textarea>
+                                        <div id="counter" class="float-right">
+                                            <span id="current">0</span>
+                                            <span id="maximum">/ 500</span>
+                                        </div>
                                         <span asp-validation-for="Contents" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
@@ -96,3 +101,22 @@
                                 </div>
                             </div>
                         </div>
+                        <script type="text/javascript">
+
+                            const messageEle = document.getElementById('message');
+                            const counterEle = document.getElementById('counter');
+
+                            messageEle.addEventListener('input', function (e) {
+                                const target = e.target;
+
+                                // Get the `maxlength` attribute
+                                const maxLength = target.getAttribute('maxlength');
+
+                                // Count the current number of characters
+                                const currentLength = target.value.length;
+
+                                counterEle.innerHTML = `${currentLength}/${maxLength}`;
+
+
+                            });
+                        </script>

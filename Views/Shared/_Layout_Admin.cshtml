@@ -75,6 +75,11 @@
                                 <i class="fas fa-newspaper"></i>News
                             </a>
                         </li>
+                        <li>
+                            <a asp-area="" asp-controller="Admin" asp-action="User">
+                                <i class="fas fa-user"></i>Users
+                            </a>
+                        </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Pages
@@ -121,6 +126,11 @@
                         <li class="@Html.Raw(ViewBag.active== 4 ? "active":"")">
                             <a asp-area="" asp-controller="Admin" asp-action="New">
                                 <i class="fas fa-newspaper"></i>News
+                            </a>
+                        </li>
+                        <li class="@Html.Raw(ViewBag.active== 5 ? "active":"")">
+                            <a asp-area="" asp-controller="Admin" asp-action="User">
+                                <i class="fas fa-user"></i>Users
                             </a>
                         </li>
                         <li class="has-sub">

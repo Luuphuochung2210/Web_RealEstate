@@ -22,7 +22,8 @@ namespace Web_RealEstate.Controllers
                               IPropertyReposistory propertyReposistory,
                               INewsReposistory newsReposistory,
                               IUserReposistory userReposistory,
-                              IAdminReposistory adminReposistory) //store all connection string and table top retrieve data
+                              IAdminReposistory adminReposistory,
+                              IWebHostEnvironment webHost) //store all connection string and table top retrieve data
         {
             _postReposistory = postReposistory;
             _sellerReposistory = sellerReposistory;
@@ -30,13 +31,26 @@ namespace Web_RealEstate.Controllers
             _newsReposistory = newsReposistory;
             _userReposistory = userReposistory;
             _adminReposistory = adminReposistory;
+            webHostEnvironment = webHost;
         }
         public IActionResult Index()
         {
             string userName = HttpContext.Session.GetString("UserName");
             string email = HttpContext.Session.GetString("Email");
             AdminModel model = new AdminModel();
+            //index count item
+            {
+                model.MySeller = _sellerReposistory.GetAll();
+                model.MyNews = _newsReposistory.GetAll();
+                model.MyProp = _propertyReposistory.GetAll();
+                model.MyUser = _userReposistory.GetAll();
 
+                ViewBag.UserCount = model.MyUser.Count;
+                ViewBag.SellerCount = model.MySeller.Count;
+                ViewBag.PropCount = model.MyProp.Count;
+                ViewBag.NewsCount = model.MyNews.Count;
+            }
+            //index take item from list
             List<Post> objPostList = _postReposistory.GetTop3();
             model.MyPost = objPostList;
 
@@ -45,6 +59,7 @@ namespace Web_RealEstate.Controllers
 
             List<Seller> objSellerList = _sellerReposistory.GetTop3();
             model.MySeller = objSellerList;
+
 
             return View(model);
         }
@@ -81,7 +96,7 @@ namespace Web_RealEstate.Controllers
         public IActionResult EditProperty(Property property)
         {
             _propertyReposistory.EditingProperty(property);
-            TempData["Message"] = "Update Property Successfully!!!";
+            TempData["upMessage"] = "Update Property Successfully!!!";
             return RedirectToAction("Property");
         }
 
@@ -96,7 +111,7 @@ namespace Web_RealEstate.Controllers
         public IActionResult DeleteProperty(Property property)
         {
             _propertyReposistory.DeleteProperty(property);
-            TempData["Message"] = "Delete Property Successfully!!!";
+            TempData["delMessage"] = "Delete Property Successfully!!!";
 
             return RedirectToAction("Property");
         }
@@ -126,7 +141,7 @@ namespace Web_RealEstate.Controllers
         public IActionResult EditingAgent(Seller seller)
         {
             _sellerReposistory.EditingAgent(seller);
-            TempData["Message"] = "Update Agent Successfully!!!";
+            TempData["upMessage"] = "Update Agent Successfully!!!";
 
             return RedirectToAction("Agent");
         }
@@ -141,7 +156,7 @@ namespace Web_RealEstate.Controllers
         public IActionResult DeleteAgent(Seller seller)
         {
             _sellerReposistory.DeleteAgent(seller);
-            TempData["Message"] = "Delete Agent Successfully!!!";
+            TempData["delMessage"] = "Delete Agent Successfully!!!";
 
             return RedirectToAction("Agent");
         }
@@ -164,6 +179,9 @@ namespace Web_RealEstate.Controllers
             string uniqueFileName = UploadImage(news);
             news.Image = uniqueFileName;
             _newsReposistory.UploadFile(news);
+
+            TempData["creMessage"] = "Create New Successfully!!!";
+
             return RedirectToAction(nameof(New));
         }
 
@@ -173,8 +191,8 @@ namespace Web_RealEstate.Controllers
 
             if (news.ImageUpload != null)
             {
-                //đổi đường dẫn mới xài được create
-                string uploadFolder = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+                //duong dan vao folder
+                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + news.ImageUpload.FileName;
                 string filePath = Path.Combine(uploadFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -202,7 +220,7 @@ namespace Web_RealEstate.Controllers
         public IActionResult EditingNew(News news)
         {
             _newsReposistory.EditingNew(news);
-            TempData["Message"] = "Update Successfully!!!";
+            TempData["upMessage"] = "Update New Successfully!!!";
 
             return RedirectToAction("New");
         }
@@ -218,10 +236,68 @@ namespace Web_RealEstate.Controllers
         {
             _newsReposistory.DeleteNews(news);
 
-            TempData["Message"] = "Delete Successfully!!!";
+            TempData["delMessage"] = "Delete News Successfully!!!";
 
             return RedirectToAction("New");
         }
+
+
+
+        /* --------------- USERS --------------- */
+        public IActionResult User()
+        {
+            var userlist = _userReposistory.GetAll();
+            return View("User", userlist);
+        }
+        public IActionResult EditUser(int id)
+        {
+            var edituser = _userReposistory.GetById(id);
+            return View("EditUser", edituser);
+        }
+        [HttpPost]
+        public IActionResult EditUser(LoginUser user)
+        {
+            _userReposistory.EditingUser(user);
+            TempData["upMessage"] = "Update User Successfully!!!";
+
+            return RedirectToAction("User");
+        }
+        public string UploadImage(LoginUser user)
+        {
+            string uniqueFileName = null;
+
+            if (user.ImageUpload != null)
+            {
+                //duong dan vao folder
+                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + user.ImageUpload.FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    user.ImageUpload.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+        public IActionResult DeleteUser(int id)
+        {
+            var deluser = _userReposistory.GetById(id);
+            return View("DeleteUser", deluser);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUser(LoginUser user)
+        {
+            _userReposistory.DeleteUsers(user);
+
+            TempData["delMessage"] = "Delete User Successfully!!!";
+
+            return RedirectToAction("User");
+        }
+
+
+
 
         /* --------------- PAGES --------------- */
         public IActionResult Login()

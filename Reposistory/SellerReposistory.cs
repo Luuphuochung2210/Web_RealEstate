@@ -19,10 +19,12 @@ namespace Web_RealEstate.Reposistory
 
     public class SellerReposistory : ISellerReposistory
     {
+        private readonly IWebHostEnvironment webHostEnvironment;
         private Ntphu24072001CnaContext _ctx;
-        public SellerReposistory(Ntphu24072001CnaContext ctx)
+        public SellerReposistory(Ntphu24072001CnaContext ctx, IWebHostEnvironment webHost)
         {
             _ctx = ctx;
+            webHostEnvironment = webHost;
         }
 
         public List<Seller> GetAll()
@@ -80,7 +82,7 @@ namespace Web_RealEstate.Reposistory
 
         private void DeleteImage(string imageName)
         {
-            string imagePath = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+            string imagePath = Path.Combine(webHostEnvironment.WebRootPath, "img");
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
@@ -93,7 +95,7 @@ namespace Web_RealEstate.Reposistory
 
             if (imageFile != null && imageFile.Length > 0)
             {
-                string uploadFolder = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
                 string imageFilePath = Path.Combine(uploadFolder, uniqueFileName);
 

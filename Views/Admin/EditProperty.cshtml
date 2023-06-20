@@ -40,38 +40,48 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label">Change Title:</label>
-                                        <input asp-for="Name" class="form-control" />
+                                        <input asp-for="Name" class="form-control" required />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Price" class="control-label">Change the Price:</label>
-                                        <input asp-for="Price" class="form-control" />
+                                        <input asp-for="Price" class="form-control" required />
                                         <span asp-validation-for="Price" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="CategoryId" class="control-label"></label>
-                                        <input asp-for="CategoryId" class="form-control" placeholder="2-Project 3-Buy 4-Rent"></input>
+                                        <label asp-for="CategoryId" class="control-label">Property Category:</label>
+                                        <select asp-for="CategoryId" class="form-control" required>
+                                            <option value="">-- Select The Property Category --</option>
+                                            <option value="2">Project</option>
+                                            <option value="3">Rent</option>
+                                            <option value="4">Sell</option>
+                                        </select>
                                         <span asp-validation-for="CategoryId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="LocationId" class="control-label"></label>
-                                        <textarea asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId" placeholder="1-Hà Nội
-2-Đà Nẵng
-3-Hồ Chí Minh
-4-Cần Thơ
-5-Ba Đình
-6-Hoàn Kiếm
-7-Sơn Trà
-8-Ngũ Hành Sơn
-9-Quận 1
-10-Quận 2
-11-Ninh Kiều
-12-Cái Răng" rows="12"></textarea>
+                                        <label asp-for="LocationId" class="control-label">Property Location:</label>
+                                        <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId" required>
+                                            <option value="1">Hà Nội</option>
+                                            <option value="2">Đà Nẵng</option>
+                                            <option value="3">Hồ Chí Minh</option>
+                                            <option value="4">Cần Thơ</option>
+                                            <option value="5">Ba Đình</option>
+                                            <option value="6">Hoàn Kiếm</option>
+                                            <option value="7">Sơn Trà</option>
+                                            <option value="8">Ngũ Hành Sơn</option>
+                                            <option value="9">Quận 1</option>
+                                            <option value="10">Quận 2</option>
+                                            <option value="11">Ninh Kiều</option>
+                                            <option value="12">Cái Răng</option>
+                                        </select>
                                         <span asp-validation-for="LocationId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="ChuDauTuId" class="control-label"></label>
-                                        <input asp-for="ChuDauTuId" class="form-control" asp-items="ViewBag.ChuDauTuId" placeholder="1-NovaLand 2-Vin Group"></input>
+                                        <select asp-for="ChuDauTuId" class="form-control" asp-items="ViewBag.ChuDauTuId" required>
+                                            <option value="1">NovaLand</option>
+                                            <option value="2">VinGroup</option>
+                                        </select>
                                         <span asp-validation-for="ChuDauTuId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">

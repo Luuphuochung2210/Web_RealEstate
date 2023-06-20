@@ -1,0 +1,131 @@
+﻿@model List<Web_RealEstate.Models.LoginUser>
+
+@{
+    Layout = "~/Views/shared/_layout_admin.cshtml";
+    ViewBag.title = "Users";
+    ViewBag.active = 5;
+    var createmessage = TempData["creMessage"]?.ToString();
+    var delmessage = TempData["delMessage"]?.ToString();
+    var updatemessage = TempData["upMessage"]?.ToString();
+}
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- MAIN COTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card" style="padding-bottom: 30px;">
+                                <div class="card-header" style="margin-bottom: 2%; min-height: 60px;">
+                                    <strong class="card-title mb-3">Users List</strong>
+                                </div>
+                                @if (!string.IsNullOrWhiteSpace(delmessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                        @delmessage
+                                    </div>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(updatemessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-success text-md-center" role="alert">
+                                        @updatemessage
+                                    </div>
+                                }
+                                else if (!string.IsNullOrWhiteSpace(createmessage))
+                                {
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-success text-md-center" role="alert">
+                                        @createmessage
+                                    </div>
+                                }
+                                <table class="mdl-data-table" id="table-page" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <td>Image</td>
+                                            <td>UserName</td>
+                                            <td>Name</td>
+                                            <td>Phone</td>
+                                            <td>Status</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var obj in Model)
+                                        {
+                                            string imgURL = @obj.Image;
+                                            <tr>
+                                                <td style="width: 12%">
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <img alt="User Image" src="~/img/@imgURL" class="table-avatar" style="width : 150px; height: 150px">
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    @obj.UserName
+                                                </td>
+                                                <td>
+                                                    @obj.Name
+                                                </td>
+                                                <td style="width: 20%">
+                                                    @obj.Phone
+                                                </td>
+                                                <td style="width: 18%;">
+                                                    @if (@obj.Status == 0)
+                                                    {
+                                                        <span class="badge badge-danger">Inactive</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-success">Active</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div class="table-data-feature justify-content-between">
+                                                        <button class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Edit">
+                                                            <a asp-area="" asp-controller="Admin" asp-action="EditUser" asp-route-id="@obj.Id">
+                                                                <i class="zmdi zmdi-edit">
+                                                                </i>
+                                                            </a>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip"
+                                                                data-placement="top" title="Delete">
+                                                            <a asp-area="" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@obj.Id">
+                                                                <i class="zmdi zmdi-delete"></i>
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END USER DATA-->
+                    </div>
+                    <!-- Footer  -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>
+                                    Copyright © 2023. All rights reserved. Team <a asp-area="" asp-controller="Admin" asp-action="index">LPH</a> with love
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        setTimeout(function () {
+            $('#alertMessage').fadeOut('slow', function () {
+                $(this).remove();
+
+                // Remove the message from TempData after the delay
+        @TempData.Remove("Message");
+            });
+        }, 3000);
+    </script>

@@ -21,6 +21,7 @@ builder.Services.AddTransient<IPropertyReposistory, PropertyReposistory>();
 builder.Services.AddTransient<INewsReposistory, NewsReposistory>();
 builder.Services.AddTransient<IUserReposistory, UserReposistory>();
 builder.Services.AddTransient<IAdminReposistory, AdminReposistory>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -33,6 +34,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -44,4 +46,5 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.Run();
