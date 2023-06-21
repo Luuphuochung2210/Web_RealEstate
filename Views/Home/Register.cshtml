@@ -1,0 +1,143 @@
+﻿@model Web_RealEstate.Models.LoginUser
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+    var message = TempData["Message"] as string;
+    var dismessage = TempData["disMessage"] as string;
+}
+
+<!DOCTYPE html>
+<!-- === Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <link href="~/img/favicon.png" rel="icon">
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="~/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="~/css/login.css">
+
+    <!--<title>Login & Registration Form</title>-->
+</head>
+<body>
+    <div class="container active">
+        <div class="forms active">
+            <!-- Registration Form -->
+            <div class="form signup">
+                <span class="title">Registration</span>
+
+                <form action="Register" method="post">
+                    <div class="input-field">
+                        <input asp-for="Name" type="text" placeholder="Enter your name" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input asp-for="UserName" type="text" placeholder="Enter your username" required>
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+
+                    <div class="input-field">
+                        <input asp-for="PassWord" type="password" class="password" placeholder="Create a password" required>
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            <input type="checkbox" id="termCon">
+                            <label for="termCon" class="text">I accepted all terms and conditions</label>
+                        </div>
+                    </div>
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div id="alertMessage" class="alert alert-danger">@TempData["ErrorMessage"]</div>
+
+                        <script type="text/javascript">
+                            setTimeout(function () {
+                                $('#alertMessage').fadeOut('slow', function () {
+                                    $(this).remove();
+
+                                    // Remove the message from TempData after the delay
+                            @TempData.Remove("ErrorMessage");
+                                });
+                            }, 3000);
+                        </script>
+                    }
+
+                    <div class="input-field button">
+                        <input type="submit" value="Signup">
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">
+                        Already a member?
+                        <a asp-controller="Home" asp-action="Login" class="text login-link">Login Now</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!--<script src="script.js"></script>-->
+        <!-- Jquery JS-->
+        <script src="~/vendor/jquery-3.2.1.min.js"></script>
+        <!-- Bootstrap JS-->
+        <script src="~/vendor/bootstrap-4.1/popper.min.js"></script>
+        <script src="~/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+        <!-- Vendor JS       -->
+        <script src="~/vendor/slick/slick.min.js">
+        </script>
+        <script src="~/vendor/wow/wow.min.js"></script>
+        <script src="~/vendor/animsition/animsition.min.js"></script>
+        <script src="~/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+        </script>
+        <script src="~/vendor/counter-up/jquery.waypoints.min.js"></script>
+        <script src="~/vendor/counter-up/jquery.counterup.min.js">
+        </script>
+        <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
+        <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+        <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
+        <script src="~/vendor/select2/select2.min.js">
+        </script>
+
+        <!-- Main JS-->
+        <script src="~/js_admin/main_admin.js"></script>
+
+
+        <script>
+            const container = document.querySelector(".container"),
+                pwShowHide = document.querySelectorAll(".showHidePw"),
+                pwFields = document.querySelectorAll(".password"),
+
+                //   js code to show/hide password and change icon
+                pwShowHide.forEach(eyeIcon => {
+                    eyeIcon.addEventListener("click", () => {
+                        pwFields.forEach(pwField => {
+                            if (pwField.type === "password") {
+                                pwField.type = "text";
+
+                                pwShowHide.forEach(icon => {
+                                    icon.classList.replace("uil-eye-slash", "uil-eye");
+                                })
+                            } else {
+                                pwField.type = "password";
+
+                                pwShowHide.forEach(icon => {
+                                    icon.classList.replace("uil-eye", "uil-eye-slash");
+                                })
+                            }
+                        })
+                    })
+                })
+        </script>
+</body>
+</html>

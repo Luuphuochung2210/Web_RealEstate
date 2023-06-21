@@ -4,9 +4,9 @@
     Layout = "~/Views/shared/_layout_admin.cshtml";
     ViewBag.title = "Agents";
     ViewBag.active = 3;
-    var createmessage = TempData["CreateMessage"]?.ToString();
-    var delmessage = TempData["Message"]?.ToString();
-    var updatemessage = TempData["UpMessage"]?.ToString();
+    var createmessage = TempData["creMessage"]?.ToString();
+    var delmessage = TempData["delMessage"]?.ToString();
+    var updatemessage = TempData["upMessage"]?.ToString();
 }
 <!-- PAGE CONTAINER-->
 <div class="page-container">
@@ -29,13 +29,13 @@
                                 }
                                 else if (!string.IsNullOrWhiteSpace(updatemessage))
                                 {
-                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-success text-md-center" role="alert">
                                         @updatemessage
                                     </div>
                                 }
                                 else if (!string.IsNullOrWhiteSpace(createmessage))
                                 {
-                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-warning text-md-center" role="alert">
+                                    <div id="alertMessage" class="col-md-4 offset-md-4 alert alert-success text-md-center" role="alert">
                                         @createmessage
                                     </div>
                                 }

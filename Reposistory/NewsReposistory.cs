@@ -15,8 +15,6 @@ namespace Web_RealEstate.Reposistory
 
         public News GetById(int Id);
 
-        public void Addnew(News news);
-
         public void EditingNew(News news);
 
         public void DeleteNews(News news);
@@ -49,12 +47,6 @@ namespace Web_RealEstate.Reposistory
             return _ctx.News
                 .Where(x => x.Id == Id)
                 .SingleOrDefault();
-        }
-
-        public void Addnew(News news)
-        {
-            _ctx.News.Add(news);
-            _ctx.SaveChanges();
         }
 
         public void EditingNew(News news)
@@ -101,7 +93,7 @@ namespace Web_RealEstate.Reposistory
         }
         private void DeleteImage(string imageName)
         {
-            string imagePath = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+            string imagePath = Path.Combine(webHostEnvironment.WebRootPath, "img");
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
@@ -114,7 +106,7 @@ namespace Web_RealEstate.Reposistory
 
             if (imageFile != null && imageFile.Length > 0)
             {
-                string uploadFolder = "C://Users//Admin//Desktop//Bài tập về nhà//17,6,2023//RealEstate//RealEstate//wwwroot//img";
+                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
                 string imageFilePath = Path.Combine(uploadFolder, uniqueFileName);
 

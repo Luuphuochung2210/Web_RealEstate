@@ -60,7 +60,7 @@
                                     <label asp-for="PassWord">Password</label>
                                     <input asp-for="PassWord" class="au-input au-input--full" placeholder="Password" type="password" required>
                                 </div>
-                                @if (!string.IsNullOrWhiteSpace(message))
+                                @if (!string.IsNullOrWhiteSpace(TempData["Message"] as string))
                                 {
                                     <div id="alertMessage" class="col-md-12 alert alert-danger text-md-center" role="alert">
                                         @message
@@ -77,14 +77,6 @@
                                         }, 5000);
                                     </script>
                                 }
-                                <div class="login-checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember">Remember Me
-                                    </label>
-                                    <label>
-                                        <a asp-area="" asp-controller="Admin" asp-action="ForgetPass">Forgotten Password?</a>
-                                    </label>
-                                </div>
                                 <hr />
                                 <button class="au-btn au-btn--block au-btn--green m-p-b-10" type="submit">
                                     Sign In

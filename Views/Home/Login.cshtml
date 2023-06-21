@@ -1,5 +1,11 @@
-﻿@{    
+﻿@model Web_RealEstate.Models.LoginUser
+
+@{
+    ViewData["Title"] = "Login";
     Layout = null;
+    var message = TempData["Message"] as string;
+    var dismessage = TempData["disMessage"] as string;
+    var regmessage = TempData["regMessage"] as string;
 }
 
 <!DOCTYPE html>
@@ -16,6 +22,7 @@
 
     <link href="~/img/favicon.png" rel="icon">
     <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="~/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
 
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="~/css/login.css">
@@ -25,20 +32,71 @@
 <body>
 
     <div class="container" id="myLogin">
-        <div class="forms">
+        <div class="forms" style="height:510px">
             <div class="form login">
                 <span class="title">Login</span>
-
-                <form action="#">
+                <form action="" method="post">
                     <div class="input-field">
-                        <input type="text" placeholder="Enter your email" required>
+                        <input asp-for="UserName" type="text" placeholder="Enter your email" required>
                         <i class="uil uil-envelope icon"></i>
                     </div>
                     <div class="input-field">
-                        <input type="password" class="password" placeholder="Enter your password" required>
+                        <input asp-for="PassWord" type="password" class="password" placeholder="Enter your password" required>
                         <i class="uil uil-lock icon"></i>
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
+                    @if (!string.IsNullOrWhiteSpace(TempData["disMessage"] as string))
+                    {
+                        <div id="alertMessage" class="col-md-12 alert alert-danger text-md-center" role="alert">
+                            @dismessage
+                        </div>
+
+                        <script>
+                            setTimeout(function () {
+                                $('#alertMessage').fadeOut('slow', function () {
+                                    $(this).remove();
+
+                                    // Remove the message from TempData after the delay
+                            @TempData.Remove("disMessage");
+                                });
+                            }, 4000);
+                        </script>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(TempData["Message"] as string))
+                    {
+                        <div id="alertMessage" class="col-md-12 alert alert-danger text-md-center" role="alert">
+                            @message
+                        </div>
+
+                        <script>
+                            setTimeout(function () {
+                                $('#alertMessage').fadeOut('slow', function () {
+                                    $(this).remove();
+
+                                    // Remove the message from TempData after the delay
+                            @TempData.Remove("Message");
+                                });
+                            }, 3000);
+                        </script>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(TempData["regMessage"] as string))
+                    {
+                        <div id="alertMessage" class="col-md-12 alert alert-warning text-md-center" role="alert">
+                            @regmessage
+                        </div>
+
+                        <script>
+                            setTimeout(function () {
+                                $('#alertMessage').fadeOut('slow', function () {
+                                    $(this).remove();
+
+                                    // Remove the message from TempData after the delay
+                            @TempData.Remove("regMessage");
+                                });
+                            }, 3000);
+                        </script>
+                    }
+
 
                     <div class="checkbox-text">
                         <div class="checkbox-content">
@@ -50,64 +108,47 @@
                     </div>
 
                     <div class="input-field button">
-                        <input type="button" value="Login">
+                        <input type="submit" value="Login">
                     </div>
                 </form>
 
                 <div class="login-signup">
                     <span class="text">
                         Not a member?
-                        <a href="#" class="text signup-link">Signup Now</a>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Registration Form -->
-            <div class="form signup">
-                <span class="title">Registration</span>
-
-                <form action="#">
-                    <div class="input-field">
-                        <input type="text" placeholder="Enter your name" required>
-                        <i class="uil uil-user"></i>
-                    </div>
-                    <div class="input-field">
-                        <input type="text" placeholder="Enter your email" required>
-                        <i class="uil uil-envelope icon"></i>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="password" placeholder="Create a password" required>
-                        <i class="uil uil-lock icon"></i>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="password" placeholder="Confirm a password" required>
-                        <i class="uil uil-lock icon"></i>
-                        <i class="uil uil-eye-slash showHidePw"></i>
-                    </div>
-
-                    <div class="checkbox-text">
-                        <div class="checkbox-content">
-                            <input type="checkbox" id="termCon">
-                            <label for="termCon" class="text">I accepted all terms and conditions</label>
-                        </div>
-                    </div>
-
-                    <div class="input-field button">
-                        <input type="button" value="Signup">
-                    </div>
-                </form>
-
-                <div class="login-signup">
-                    <span class="text">
-                        Already a member?
-                        <a href="#" class="text login-link">Login Now</a>
+                        <a asp-action="Register" asp-controller="Home" class="text signup-link">Signup Now</a>
                     </span>
                 </div>
             </div>
         </div>
     </div>
 
+
     <!--<script src="script.js"></script>-->
+    <!-- Jquery JS-->
+    <script src="~/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="~/vendor/slick/slick.min.js">
+    </script>
+    <script src="~/vendor/wow/wow.min.js"></script>
+    <script src="~/vendor/animsition/animsition.min.js"></script>
+    <script src="~/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="~/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="~/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="~/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="~/js_admin/main_admin.js"></script>
+
+
     <script>
         const container = document.querySelector(".container"),
             pwShowHide = document.querySelectorAll(".showHidePw"),

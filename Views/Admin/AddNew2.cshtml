@@ -37,7 +37,7 @@
                                             <label asp-for="Title" class="control-label"></label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input asp-for="Title" class="form-control" />
+                                            <input asp-for="Title" class="form-control" required placeholder="Your title name..." />
                                         </div>
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
@@ -46,16 +46,21 @@
                                             <label asp-for="Contents" class="control-label"></label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <textarea asp-for="Contents" class="form-control" rows="5"></textarea>
+                                            <textarea asp-for="Contents" class="form-control" id="message" rows="5" required
+                                                      maxlength="500" placeholder="Your contents..." name="the-textarea"></textarea>
+                                            <div id="counter" class="float-right">
+                                                <span id="current">0</span>
+                                                <span id="maximum">/ 500</span>
+                                            </div>
                                         </div>
                                         <span asp-validation-for="Contents" class="text-danger"></span>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-3">
+                                        <div class="col col-md-3 mb">
                                             <label asp-for="Date" class="control-label"></label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input asp-for="Date" class="form-control" />
+                                            <input asp-for="Date" class="form-control" required />
                                         </div>
                                         <span asp-validation-for="Date" class="text-danger"></span>
                                     </div>
@@ -65,8 +70,10 @@
                                         </div>
                                         <div class="col-12 col-md-9 custom-file">
                                             <input type="file" asp-for="ImageUpload" class="custom-file-input" id="customFile"
-                                                   onchange="document.getElementById('ImagePrev').src = window.URL.createObjectURL(this.files[0])" />
-                                            <label class="custom-file-label" for="customFile">Choose File</label>
+                                                   onchange="document.getElementById('ImagePrev').src = window.URL.createObjectURL(this.files[0])" required />
+
+                                            <label class="custom-file-label" for="customFile" style="left:14px; right:14px">Choose File</label>
+
                                             <span asp-validation-for="Image" class="text-danger"></span>
                                         </div>
                                         <img id="ImagePrev" src="~/images/noimage.png" alt="Logo Image" style="border: 1px; margin-top:50px; margin-left:50%; width: 200px ; height: 170px" />
@@ -105,3 +112,22 @@
             });
         </script>
 
+        <script type="text/javascript">
+
+            const messageEle = document.getElementById('message');
+            const counterEle = document.getElementById('counter');
+
+            messageEle.addEventListener('input', function (e) {
+                const target = e.target;
+
+                // Get the `maxlength` attribute
+                const maxLength = target.getAttribute('maxlength');
+
+                // Count the current number of characters
+                const currentLength = target.value.length;
+
+                counterEle.innerHTML = `${currentLength}/${maxLength}`;
+
+
+            });
+        </script>
