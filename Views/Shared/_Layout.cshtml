@@ -131,8 +131,15 @@
                             </a>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="UserDetail">Account</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Login">Logout</a>
+                            <form>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="UserDetail">Account</a>
+                            </form>
+                            <form method="post" asp-area="" asp-action="Logout" asp-controller="Home">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">
+                                    Logout
+                                    <button type="submit" style="cursor:pointer; border:none"></button>
+                                </a>
+                            </form>
                         </div>
                     </div>
                 }

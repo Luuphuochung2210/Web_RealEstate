@@ -223,7 +223,7 @@ namespace Web_RealEstate.Controllers
             _userReposistory.ClearSession();
 
             // Redirect to the login page or any other appropriate page
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         /* --------------- PAGES --------------- */
