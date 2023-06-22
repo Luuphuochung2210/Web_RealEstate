@@ -34,7 +34,6 @@
     </div>
 </section>
 <!--/ Intro Single End /-->
-
 <!--/ Property Single Star /-->
 <section class="property-single nav-arrow-b">
 
@@ -76,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="summary-list">
-                                    <ul class="list">                                        
+                                    <ul class="list">
                                         <li class="d-flex justify-content-between">
                                             <strong>Seller </strong>
                                             <span>@post.Seller.Name</span>
@@ -119,7 +118,7 @@
                             <div class="property-description">
                                 <p class="description color-text-a">
                                     @post.Description
-                                </p>                                
+                                </p>
                             </div>
                             <div class="row section-t3">
                                 <div class="col-sm-12">
@@ -197,18 +196,35 @@
                                 <p class="color-text-a">
                                     @post.Seller.Address
                                 </p>
-                                <ul class="list-unstyled">                                    
+                                <ul class="list-unstyled">
+                                    @if (Context.Session.GetString("UserName") != null)
+                                    {
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Contact:</strong>
+                                            <span class="color-text-a">@post.Seller.Phone</span>
+                                        </li>
 
-                                    <li class="d-flex justify-content-between">
-                                        <strong>Contact:</strong>
-                                        <span class="color-text-a">@post.Seller.Phone</span>
-                                    </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Email:</strong>
+                                            <span class="color-text-a">@post.Seller.Email</span>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Contact:</strong>
+                                            <span class="color-text-a">
+                                                *****
+                                            </span>
+                                        </li>
 
-                                    <li class="d-flex justify-content-between">
-                                        <strong>Email:</strong>
-                                        <span class="color-text-a">@post.Seller.Email</span>
-                                    </li>
-
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Email:</strong>
+                                            <span class="color-text-a">
+                                                *****
+                                            </span>
+                                        </li>
+                                    }
                                 </ul>
                                 <div class="socials-a">
                                     <ul class="list-inline">
