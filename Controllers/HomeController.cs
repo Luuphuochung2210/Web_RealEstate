@@ -157,7 +157,7 @@ namespace Web_RealEstate.Controllers
         {
             LoginUser user = _userReposistory.GetById(id);
 
-            return View("UserDetail",user);
+            return View("UserDetail", user);
         }
         [HttpPost]
         public IActionResult UserDetail(LoginUser user)
@@ -208,6 +208,7 @@ namespace Web_RealEstate.Controllers
             {
                 /* Successful login */
                 HttpContext.Session.SetString("UserName", adlog[0].UserName);
+                HttpContext.Session.SetInt32("Id", adlog[0].Id);
                 return RedirectToAction("Index");
             }
             else
