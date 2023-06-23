@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Web_RealEstate.Models;
 using Web_RealEstate.Reposistory;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Web_RealEstate.Controllers
 {
@@ -13,12 +14,14 @@ namespace Web_RealEstate.Controllers
         private IPropertyReposistory _propertyReposistory;
         private INewsReposistory _newsReposistory;
         private IUserReposistory _userReposistory;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public HomeController(IPostReposistory postReposistory,
                               ISellerReposistory sellerReposistory,
                               IPropertyReposistory propertyReposistory,
                               INewsReposistory newsReposistory,
-                              IUserReposistory userReposistory
+                              IUserReposistory userReposistory,
+                              IWebHostEnvironment webHost
             )
         //store all connection string and retrieve table top data
         {
@@ -27,6 +30,7 @@ namespace Web_RealEstate.Controllers
             _propertyReposistory = propertyReposistory;
             _newsReposistory = newsReposistory;
             _userReposistory = userReposistory;
+            webHostEnvironment = webHost;
         }
 
         //GET HOME
@@ -149,9 +153,36 @@ namespace Web_RealEstate.Controllers
             return View();
         }
 
-        public IActionResult UserDetail()
+        public IActionResult UserDetail(int id)
         {
-            return View();
+            LoginUser user = _userReposistory.GetById(id);
+
+            return View("UserDetail",user);
+        }
+        [HttpPost]
+        public IActionResult UserDetail(LoginUser user)
+        {
+            _userReposistory.EditingHomeUser(user);
+            TempData["upMessage"] = "Update User Successfully!!!";
+
+            return RedirectToAction("Index");
+        }
+        public string UploadImage(LoginUser user)
+        {
+            string uniqueFileName = null;
+
+            if (user.ImageUpload != null)
+            {
+                //duong dan vao folder
+                string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "img");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + user.ImageUpload.FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    user.ImageUpload.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
 
         /* --------------- Login --------------- */

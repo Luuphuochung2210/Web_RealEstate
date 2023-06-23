@@ -16,7 +16,6 @@ public partial class News
     public string? Title { get; set; }
 
     public string? Image { get; set; }
-
     [Required(ErrorMessage = "Please choose an Image")]
     [Display(Name = "Upload Image")]
     [NotMapped]

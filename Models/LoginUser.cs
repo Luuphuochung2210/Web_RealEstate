@@ -24,9 +24,13 @@ public partial class LoginUser
     public int Status { get; set; }
 
     public string? Image { get; set; }
+
+    public string? Address { get; set; }
+
+    public string? Email { get; set; }
+
     [Required(ErrorMessage = "Please choose an Image")]
     [Display(Name = "Upload Image")]
     [NotMapped]
     public IFormFile ImageUpload { get; set; }
-
 }

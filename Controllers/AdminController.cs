@@ -254,6 +254,7 @@ namespace Web_RealEstate.Controllers
             var edituser = _userReposistory.GetById(id);
             return View("EditUser", edituser);
         }
+
         [HttpPost]
         public IActionResult EditUser(LoginUser user)
         {

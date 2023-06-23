@@ -9,6 +9,7 @@ namespace Web_RealEstate.Reposistory
         public List<LoginUser> GetAll();
         public LoginUser GetById(int Id);
         public void AddNewUser(LoginUser user);
+        public void EditingHomeUser(LoginUser user);
         public void EditingUser(LoginUser user);
 
         public void DeleteUsers(LoginUser user);
@@ -39,6 +40,7 @@ namespace Web_RealEstate.Reposistory
         {
             return _ctx.LoginUsers.ToList();
         }
+
         public LoginUser GetById(int Id)
         {
             return _ctx.LoginUsers
@@ -73,6 +75,39 @@ namespace Web_RealEstate.Reposistory
                     existingUser.Name = user.Name;
                     existingUser.Phone = user.Phone;
                     existingUser.Status = user.Status;
+                    existingUser.Address = user.Address;
+                    existingUser.Email = user.Email;
+
+                    if (user.ImageUpload != null && user.ImageUpload.Length > 0)
+                    {
+                        if (!string.IsNullOrEmpty(existingUser.Image))
+                        {
+                            DeleteImage(existingUser.Image);
+                        }
+                        existingUser.Image = SaveImage(user.ImageUpload);
+                    }
+                    _ctx.Attach(existingUser);
+                    _ctx.Entry(existingUser).State = EntityState.Modified;
+                    _ctx.SaveChanges();
+                }
+            }
+        }
+
+        public void EditingHomeUser(LoginUser user)
+        {
+            if (user != null)
+            {
+                var existingUser = _ctx.LoginUsers.Where(x => x.Id == user.Id).FirstOrDefault();
+                if (existingUser != null)
+                {
+                    existingUser.Id = user.Id;
+                    existingUser.UserName = user.UserName;
+                    existingUser.PassWord = user.PassWord;
+                    existingUser.Name = user.Name;
+                    existingUser.Phone = user.Phone;
+                    existingUser.Status = 1;
+                    existingUser.Address = user.Address;
+                    existingUser.Email = user.Email;
 
                     if (user.ImageUpload != null && user.ImageUpload.Length > 0)
                     {
@@ -129,6 +164,7 @@ namespace Web_RealEstate.Reposistory
         {
             return _ctx.LoginUsers.Where(a => a.UserName.Equals(loginUser.UserName) && a.PassWord.Equals(loginUser.PassWord)).ToList();
         }
+
         public void DeleteUsers(LoginUser user)
         {
             if (user != null)
@@ -137,6 +173,7 @@ namespace Web_RealEstate.Reposistory
                 _ctx.SaveChanges();
             }
         }
+
         public void ClearSession()
         {
             _httpContextAccessor.HttpContext.Session.Clear();

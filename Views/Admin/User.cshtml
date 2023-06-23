@@ -46,6 +46,8 @@
                                             <td>UserName</td>
                                             <td>Name</td>
                                             <td>Phone</td>
+                                            <td>Address</td>
+                                            <td>Email</td>
                                             <td>Status</td>
                                             <td></td>
                                         </tr>
@@ -62,16 +64,22 @@
                                                         </li>
                                                     </ul>
                                                 </td>
-                                                <td style="width: 20%">
+                                                <td>
                                                     @obj.UserName
                                                 </td>
                                                 <td>
                                                     @obj.Name
                                                 </td>
-                                                <td style="width: 20%">
+                                                <td>
                                                     @obj.Phone
                                                 </td>
-                                                <td style="width: 18%;">
+                                                <td>
+                                                    @obj.Address
+                                                </td>
+                                                <td>
+                                                    @obj.Email
+                                                </td>
+                                                <td>
                                                     @if (@obj.Status == 0)
                                                     {
                                                         <span class="badge badge-danger">Inactive</span>

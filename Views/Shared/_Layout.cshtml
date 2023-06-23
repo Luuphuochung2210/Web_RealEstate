@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model HomeModel
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -61,7 +63,6 @@
 
                     <!-- search button -->
                     <div class="col-md-12">
-                        @*<span class="ion-ios-arrow-forward"></span>*@
                         <input type="submit" class="btn btn-b btn-block d-block" value="Search Property" />
                     </div>
                 </div>  <!-- row -->
@@ -119,8 +120,8 @@
                 {
                     <div class="dropdown">
                         <button type="button" class="btn btn-b-n navbar-toggle-box-collapse d-none d-md-block"
-                                aria-expanded="false" data-toggle="dropdown">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">
+                                aria-expanded="false" disabled style="opacity:1">
+                            <a class="nav-link text-dark">
                                 <span class="fa fa-user-circle" aria-hidden="true">
                                     <span style="font-family: 'Poppins' , sans-serif; font-size: 1.1rem;
     color: #343a40!important;
@@ -131,22 +132,25 @@
                             </a>
                         </button>
                         <div class="dropdown-menu">
-                            <form>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="UserDetail">Account</a>
-                            </form>
-                            <form method="post" asp-area="" asp-action="Logout" asp-controller="Home">
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">
-                                    Logout
-                                    <button type="submit" style="cursor:pointer; border:none"></button>
-                                </a>
-                            </form>
+                            @foreach (var obj in Model.MyUser)
+                            {
+                                <form>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="UserDetail" asp-route-id="@obj.Id">Account</a>
+                                </form>
+                            }
+                                <form method="post" asp-area="" asp-action="Logout" asp-controller="Home">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">
+                                        Logout
+                                        <button type="submit" style="cursor:pointer; border:none"></button>
+                                    </a>
+                                </form>                                  
                         </div>
                     </div>
                 }
                 else
                 {
                     <button type="button" class="btn btn-b-n navbar-toggle-box-collapse d-none d-md-block"
-                            aria-expanded="false">
+                            aria-expanded="false" disabled>
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">
                             <span class="fa fa-user-circle" aria-hidden="true">
                                 <span style="font-family: 'Poppins' , sans-serif; font-size: 1.1rem;
@@ -162,6 +166,7 @@
         </div>
     </nav>
     <!--/ Nav End /-->
+
     <!--/ footer Star /-->
     <section class="section-footer">
         <div class="container">
