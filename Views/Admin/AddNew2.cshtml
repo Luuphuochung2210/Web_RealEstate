@@ -60,7 +60,7 @@
                                             <label asp-for="Date" class="control-label"></label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <input asp-for="Date" class="form-control" required />
+                                            <input asp-for="Date" class="form-control" type="datetime-local" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                                         </div>
                                         <span asp-validation-for="Date" class="text-danger"></span>
                                     </div>

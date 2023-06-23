@@ -289,7 +289,7 @@ section {
 
 .main-content {
     padding-top: 48px;
-    min-height: 120vh;
+    min-height: 140vh;
 }
 
 @media (max-width: 991px) {
