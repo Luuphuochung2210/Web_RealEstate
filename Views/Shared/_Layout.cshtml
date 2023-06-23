@@ -1,4 +1,6 @@
-﻿@model HomeModel
+﻿@{
+    var loggedInUser = ViewBag.LoggedInUser as LoginUser;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -132,18 +134,14 @@
                             </a>
                         </button>
                         <div class="dropdown-menu">
-                            @foreach (var obj in Model.MyUser)
-                            {
-                                <form>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="UserDetail" asp-route-id="@obj.Id">Account</a>
-                                </form>
-                            }
-                                <form method="post" asp-area="" asp-action="Logout" asp-controller="Home">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">
-                                        Logout
-                                        <button type="submit" style="cursor:pointer; border:none"></button>
-                                    </a>
-                                </form>                                  
+                            <form>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="UserDetail" asp-route-id="@Context.Session.GetInt32("Id")">Account</a>
+                            </form>
+                            <form method="post" asp-area="" asp-action="Logout" asp-controller="Home">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">
+                                    Logout
+                                </a>
+                            </form>
                         </div>
                     </div>
                 }
@@ -166,7 +164,6 @@
         </div>
     </nav>
     <!--/ Nav End /-->
-
     <!--/ footer Star /-->
     <section class="section-footer">
         <div class="container">
