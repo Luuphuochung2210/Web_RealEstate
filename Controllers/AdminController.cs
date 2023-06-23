@@ -35,9 +35,15 @@ namespace Web_RealEstate.Controllers
         }
         public IActionResult Index()
         {
+            AdminModel model = new AdminModel();
+            var login = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrEmpty(login))
+            {
+                return RedirectToAction("login");
+            }
             string userName = HttpContext.Session.GetString("UserName");
             string email = HttpContext.Session.GetString("Email");
-            AdminModel model = new AdminModel();
+
             //index count item
             {
                 model.MySeller = _sellerReposistory.GetAll();
@@ -59,8 +65,6 @@ namespace Web_RealEstate.Controllers
 
             List<Seller> objSellerList = _sellerReposistory.GetTop3();
             model.MySeller = objSellerList;
-
-
             return View(model);
         }
 
