@@ -11,6 +11,7 @@ namespace Web_RealEstate.Reposistory
         public void AddNewUser(LoginUser user);
         public void EditingHomeUser(LoginUser user);
         public void EditingUser(LoginUser user);
+        public void SaveChanges();
 
         public void DeleteUsers(LoginUser user);
 
@@ -19,6 +20,8 @@ namespace Web_RealEstate.Reposistory
         /* Login For Home Page*/
         public List<LoginUser> HomeLogin(LoginUser loginUser);
         public LoginUser GetExistingUser(string username);
+        public LoginUser GetExistingEmail(string email);
+
         public void ClearSession();
     }
 
@@ -51,6 +54,11 @@ namespace Web_RealEstate.Reposistory
         public LoginUser GetExistingUser(string username)
         {
             return _ctx.LoginUsers.FirstOrDefault(a => a.UserName == username);
+        }
+
+        public LoginUser GetExistingEmail(string email)
+        {
+            return _ctx.LoginUsers.FirstOrDefault(u => u.Email == email);
         }
 
         public void AddNewUser(LoginUser user)
@@ -123,7 +131,10 @@ namespace Web_RealEstate.Reposistory
                 }
             }
         }
-
+        public void SaveChanges()
+        {
+            _ctx.SaveChanges();
+        }
 
         public void UploadFile(LoginUser user)
         {

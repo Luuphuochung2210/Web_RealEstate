@@ -4,6 +4,9 @@ using Web_RealEstate.Models;
 using Web_RealEstate.Reposistory;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 
 namespace Web_RealEstate.Controllers
 {
@@ -246,6 +249,55 @@ namespace Web_RealEstate.Controllers
             }
             _userReposistory.AddNewUser(loginUser);
             TempData["regMessage"] = "Account successfully registered!";
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult ForgotPass()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPass(LoginUser loginUser)
+        {
+            var existingUser = _userReposistory.GetExistingEmail(loginUser.Email);
+
+            if (existingUser == null)
+            {
+                TempData["ErrorMessage"] = "Email does not exist. Please enter a valid email!";
+                return View(loginUser);
+            }
+
+            TempData["regMessage"] = "Success!!";
+            return RedirectToAction("ForgotPass");
+        }
+
+        public IActionResult ResetPass()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPass(string email, string password)
+        {
+            var existingUser = _userReposistory.GetExistingEmail(email);
+
+            if (existingUser == null)
+            {
+                TempData["ErrorMessage"] = "Incorrect email . Please Try Again!";
+                return RedirectToAction("ResetPass");
+            }
+
+            if (existingUser.PassWord == password)
+            {
+                TempData["ErrorMessage"] = "This is an old password. Please enter a new Password!";
+                return RedirectToAction("ResetPass");
+            }
+
+            existingUser.PassWord = password;
+            _userReposistory.SaveChanges();
+
+            TempData["upMessage"] = "Password updated successfully!";
             return RedirectToAction("Login");
         }
 
