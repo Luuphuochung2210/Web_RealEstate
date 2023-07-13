@@ -1,10 +1,10 @@
 ﻿@model Web_RealEstate.Models.LoginUser
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Forgot Password";
     Layout = null;
     var message = TempData["Message"] as string;
-    var dismessage = TempData["disMessage"] as string;
+    var regMessage = TempData["regMessage"] as string;
 }
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Forgot Password</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,38 +25,21 @@
 
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="~/css/login.css">
-
-    <!--<title>Login & Registration Form</title>-->
 </head>
 <body>
-    <div class="container active">
-        <div class="forms active">
+    <div class="container ">
+        <div class="forms">
             <!-- Registration Form -->
-            <div class="form signup">
-                <span class="title">Registration</span>
-
-                <form action="Register" method="post">
-                    <div class="input-field">
-                        <input asp-for="Name" type="text" placeholder="Enter your name" required>
-                        <i class="uil uil-user"></i>
-                    </div>
-                    <div class="input-field">
-                        <input asp-for="UserName" type="text" placeholder="Enter your username" required>
-                        <i class="uil uil-envelope icon"></i>
-                    </div>
-
-                    <div class="input-field">
-                        <input asp-for="PassWord" type="password" class="password" placeholder="Create a password" required>
-                        <i class="uil uil-lock icon"></i>
-                        <i class="uil uil-eye-slash showHidePw"></i>
-                    </div>
-
-                    <div class="checkbox-text">
-                        <div class="checkbox-content">
-                            <input type="checkbox" id="termCon">
-                            <label for="termCon" class="text">I accepted all terms and conditions</label>
+            <div class="form forgotpass">
+                <span class="title">Reset Your Password : </span>
+                <form action="ForgotPass" method="post">
+                    @if (TempData["regMessage"] == null)
+                    {
+                        <div class="input-field">
+                            <input asp-for="Email" type="text" placeholder="Enter your email" required>
+                            <i class="uil uil-user"></i>
                         </div>
-                    </div>
+                    }
                     @if (TempData["ErrorMessage"] != null)
                     {
                         <div id="alertMessage" class="alert alert-danger">@TempData["ErrorMessage"]</div>
@@ -72,9 +55,14 @@
                             }, 3000);
                         </script>
                     }
-
+                    @if (!string.IsNullOrWhiteSpace(TempData["regMessage"] as string))
+                    {
+                        <div id="alertMessage" class="col-md-12 alert alert-warning text-md-center mt-4" role="alert">
+                            @regMessage <a href="ResetPass">Reset Password right now!</a>
+                        </div>
+                    }
                     <div class="input-field button">
-                        <input type="submit" value="Signup">
+                        <input type="submit" value="Submit">
                     </div>
                 </form>
 
