@@ -3,8 +3,6 @@
 @{
     ViewData["Title"] = "Register";
     Layout = null;
-    var message = TempData["Message"] as string;
-    var dismessage = TempData["disMessage"] as string;
 }
 
 <!DOCTYPE html>
@@ -37,14 +35,13 @@
 
                 <form action="Register" method="post">
                     <div class="input-field">
-                        <input asp-for="Name" type="text" placeholder="Enter your name" required>
-                        <i class="uil uil-user"></i>
+                        <input asp-for="UserName" type="text" placeholder="Enter your username" required>
+                        <i class="uil uil-user-circle icon"></i>
                     </div>
                     <div class="input-field">
-                        <input asp-for="UserName" type="text" placeholder="Enter your username" required>
+                        <input asp-for="Email" type="email" placeholder="Enter your email" required>
                         <i class="uil uil-envelope icon"></i>
                     </div>
-
                     <div class="input-field">
                         <input asp-for="PassWord" type="password" class="password" placeholder="Create a password" required>
                         <i class="uil uil-lock icon"></i>
@@ -54,12 +51,12 @@
                     <div class="checkbox-text">
                         <div class="checkbox-content">
                             <input type="checkbox" id="termCon">
-                            <label for="termCon" class="text">I accepted all terms and conditions</label>
+                            <label style="margin-bottom:0" for="termCon" class="text">I accepted all terms and conditions</label>
                         </div>
                     </div>
-                    @if (TempData["ErrorMessage"] != null)
+                    @if (TempData["NameMessage"] != null)
                     {
-                        <div id="alertMessage" class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                        <div id="alertMessage" class="alert alert-danger">@TempData["NameMessage"]</div>
 
                         <script type="text/javascript">
                             setTimeout(function () {
@@ -67,7 +64,22 @@
                                     $(this).remove();
 
                                     // Remove the message from TempData after the delay
-                            @TempData.Remove("ErrorMessage");
+                            @TempData.Remove("NameMessage");
+                                });
+                            }, 3000);
+                        </script>
+                    }
+                    @if (TempData["MailMessage"] != null)
+                    {
+                        <div id="alertMessage" class="alert alert-danger">@TempData["MailMessage"]</div>
+
+                        <script type="text/javascript">
+                            setTimeout(function () {
+                                $('#alertMessage').fadeOut('slow', function () {
+                                    $(this).remove();
+
+                                    // Remove the message from TempData after the delay
+                            @TempData.Remove("MailMessage");
                                 });
                             }, 3000);
                         </script>
@@ -117,27 +129,38 @@
             const container = document.querySelector(".container"),
                 pwShowHide = document.querySelectorAll(".showHidePw"),
                 pwFields = document.querySelectorAll(".password"),
+                signUp = document.querySelector(".signup-link"),
+                login = document.querySelector(".login-link");
 
-                //   js code to show/hide password and change icon
-                pwShowHide.forEach(eyeIcon => {
-                    eyeIcon.addEventListener("click", () => {
-                        pwFields.forEach(pwField => {
-                            if (pwField.type === "password") {
-                                pwField.type = "text";
+            //   js code to show/hide password and change icon
+            pwShowHide.forEach(eyeIcon => {
+                eyeIcon.addEventListener("click", () => {
+                    pwFields.forEach(pwField => {
+                        if (pwField.type === "password") {
+                            pwField.type = "text";
 
-                                pwShowHide.forEach(icon => {
-                                    icon.classList.replace("uil-eye-slash", "uil-eye");
-                                })
-                            } else {
-                                pwField.type = "password";
+                            pwShowHide.forEach(icon => {
+                                icon.classList.replace("uil-eye-slash", "uil-eye");
+                            })
+                        } else {
+                            pwField.type = "password";
 
-                                pwShowHide.forEach(icon => {
-                                    icon.classList.replace("uil-eye", "uil-eye-slash");
-                                })
-                            }
-                        })
+                            pwShowHide.forEach(icon => {
+                                icon.classList.replace("uil-eye", "uil-eye-slash");
+                            })
+                        }
                     })
                 })
+            })
+
+            // js code to appear signup and login form
+            signUp.addEventListener("click", () => {
+                container.classList.add("active");
+            });
+            login.addEventListener("click", () => {
+                container.classList.remove("active");
+            });
+
         </script>
 </body>
 </html>

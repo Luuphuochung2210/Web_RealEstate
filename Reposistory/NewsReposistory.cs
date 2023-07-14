@@ -11,6 +11,9 @@ namespace Web_RealEstate.Reposistory
     {
         public List<News> GetAll();
 
+        public List<News> GetAll(int page, int pageSize);
+        public int GetTotalCount();
+
         public List<News> GetTop3();
 
         public News GetById(int Id);
@@ -31,10 +34,22 @@ namespace Web_RealEstate.Reposistory
             _ctx = ctx;
             webHostEnvironment = webHost;
         }
-
         public List<News> GetAll()
         {
             return _ctx.News.ToList();
+        }
+        // Pagination for ALL NEWS
+        public List<News> GetAll(int page, int pageSize)
+        {
+            return _ctx.News
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        public int GetTotalCount()
+        {
+            return _ctx.News.Count();
         }
 
         public List<News> GetTop3()

@@ -32,7 +32,6 @@ namespace Web_RealEstate.Reposistory
             return _ctx.Properties.ToList();
         }
 
-
         public Property GetPropertyById(int id)
         {
             return _ctx.Properties
@@ -52,7 +51,7 @@ namespace Web_RealEstate.Reposistory
             // Apply search filters
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(p => p.Name.Contains(name) );
+                query = query.Where(p => p.Name.Contains(name));
             }
 
             //if (!string.IsNullOrEmpty(dientich))
@@ -62,9 +61,9 @@ namespace Web_RealEstate.Reposistory
 
             // Execute the query and return the results
             return query
-                .Include(x=>x.Category)
-                .Include(x=>x.Location)
-                .Include(x=>x.ChuDauTu).ToList();
+                .Include(x => x.Category)
+                .Include(x => x.Location)
+                .Include(x => x.ChuDauTu).ToList();
         }
 
         public void EditingProperty(Property property)
