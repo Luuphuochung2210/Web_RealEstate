@@ -9,7 +9,6 @@
 }
 
 <!DOCTYPE html>
-<!-- === Coding by CodingLab | www.codinglabweb.com === -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,21 +26,19 @@
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="~/css/login.css">
 
-    <!--<title>Login & Registration Form</title>-->
 </head>
 <body>
-
     <div class="container" id="myLogin">
         <div class="forms" style="height:580px">
             <div class="form login">
                 <span class="title">Login</span>
                 <form action="" method="post">
                     <div class="input-field">
-                        <input asp-for="UserName" type="text" placeholder="Enter your email" required>
+                        <input asp-for="UserName" type="text" placeholder="Enter your username" id="email" required>
                         <i class="uil uil-envelope icon"></i>
                     </div>
                     <div class="input-field">
-                        <input asp-for="PassWord" type="password" class="password" placeholder="Enter your password" required>
+                        <input asp-for="PassWord" type="password" class="password" placeholder="Enter your password" id="password" required>
                         <i class="uil uil-lock icon"></i>
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
@@ -96,22 +93,19 @@
                             }, 3000);
                         </script>
                     }
-
-
                     <div class="checkbox-text">
                         <div class="checkbox-content">
-                            <input type="checkbox" id="logCheck">
-                            <label for="logCheck" class="text">Remember me</label>
+                            <input type="checkbox" id="rememberMe">
+                            <label style="margin-bottom:0" for="rememberMe">Remember me</label>
                         </div>
 
                         <a asp-action="ForgotPass" asp-controller="Home" class="text">Forgot password?</a>
                     </div>
 
                     <div class="input-field button">
-                        <input type="submit" value="Login">
+                        <input type="submit" value="Login" onclick="lsRememberMe()">
                     </div>
                 </form>
-
                 <div class="login-signup">
                     <span class="text">
                         Not a member?
@@ -129,8 +123,6 @@
         </div>
     </div>
 
-
-    <!--<script src="script.js"></script>-->
     <!-- Jquery JS-->
     <script src="~/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -152,46 +144,64 @@
     <script src="~/vendor/select2/select2.min.js">
     </script>
 
+
     <!-- Main JS-->
     <script src="~/js_admin/main_admin.js"></script>
-
 
     <script>
         const container = document.querySelector(".container"),
             pwShowHide = document.querySelectorAll(".showHidePw"),
             pwFields = document.querySelectorAll(".password"),
-            signUp = document.querySelector(".signup-link"),
-            login = document.querySelector(".login-link");
 
-        //   js code to show/hide password and change icon
-        pwShowHide.forEach(eyeIcon => {
-            eyeIcon.addEventListener("click", () => {
-                pwFields.forEach(pwField => {
-                    if (pwField.type === "password") {
-                        pwField.type = "text";
+            //Show-Hide Function
+            pwShowHide.forEach(eyeIcon => {
+                eyeIcon.addEventListener("click", () => {
+                    pwFields.forEach(pwField => {
+                        if (pwField.type === "password") {
+                            pwField.type = "text";
 
-                        pwShowHide.forEach(icon => {
-                            icon.classList.replace("uil-eye-slash", "uil-eye");
-                        })
-                    } else {
-                        pwField.type = "password";
+                            pwShowHide.forEach(icon => {
+                                icon.classList.replace("uil-eye-slash", "uil-eye");
+                            })
+                        } else {
+                            pwField.type = "password";
 
-                        pwShowHide.forEach(icon => {
-                            icon.classList.replace("uil-eye", "uil-eye-slash");
-                        })
-                    }
+                            pwShowHide.forEach(icon => {
+                                icon.classList.replace("uil-eye", "uil-eye-slash");
+                            })
+                        }
+                    })
                 })
             })
-        })
+    </script>
 
-        // js code to appear signup and login form
-        signUp.addEventListener("click", () => {
-            container.classList.add("active");
-        });
-        login.addEventListener("click", () => {
-            container.classList.remove("active");
-        });
+    <script>
+        //Remember Me Function
+        const rmCheck = document.getElementById("rememberMe"),
+            emailInput = document.getElementById("email"),
+            passInput = document.getElementById("password");
 
+        if (localStorage.checkbox && localStorage.checkbox !== "") {
+            rmCheck.setAttribute("checked", "checked");
+            emailInput.value = localStorage.username;
+            passInput.value = localStorage.password;
+        } else {
+            rmCheck.removeAttribute("checked");
+            emailInput.value = "";
+            passInput.value = "";
+        }
+
+        function lsRememberMe() {
+            if (rmCheck.checked && emailInput.value && passInput.value !== "") {
+                localStorage.username = emailInput.value;
+                localStorage.password = passInput.value;
+                localStorage.checkbox = rmCheck.value;
+            } else {
+                localStorage.username = "";
+                localStorage.password = "";
+                localStorage.checkbox = "";
+            }
+        }
     </script>
 </body>
 </html>

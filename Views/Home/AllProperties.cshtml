@@ -32,7 +32,6 @@
     </div>
 </section>
 <!--/ Intro Single End /-->
-
 <!--/ Property Grid Star /-->
 <section class="property-grid grid">
     <div class="container">
@@ -89,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                
+                    </div>
                 }
             </tbody>
             <!-- end of 1 div tag-->
@@ -99,29 +98,18 @@
             <div class="col-sm-12">
                 <nav class="pagination-a">
                     <ul class="pagination justify-content-end">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">
-                                <span class="ion-ios-arrow-back"></span>
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item next">
-                            <a class="page-link" href="#">
-                                <span class="ion-ios-arrow-forward"></span>
-                            </a>
-                        </li>
+                        @for (int i = 1; i <= Math.Ceiling((double)Model.TotalCount / Model.PageSize); i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPageIndex ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("AllProperties", new { page = i })">@i</a>
+                            </li>
+                        }
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
 </section>
+
+
 <!--/ Property Grid End /-->

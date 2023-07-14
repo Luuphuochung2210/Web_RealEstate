@@ -18,6 +18,7 @@ namespace Web_RealEstate.Controllers
         private INewsReposistory _newsReposistory;
         private IUserReposistory _userReposistory;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private const int PageSize = 6;
 
         public HomeController(IPostReposistory postReposistory,
                               ISellerReposistory sellerReposistory,
@@ -59,15 +60,19 @@ namespace Web_RealEstate.Controllers
             return View(model);
         }
 
-        public IActionResult AllProperties()
+        public IActionResult AllProperties(int page = 1)
         {
-            HomeModel model = new HomeModel();
+            int totalCount = _postReposistory.GetTotalCount();
 
-            List<Post> objPostList = _postReposistory.GetAll();
-            model.MyPost = objPostList;
+            List<Post> posts = _postReposistory.GetAll(page, PageSize);
 
-            List<Property> objPropertyList = _propertyReposistory.GetAll();
-            model.MyProp = objPropertyList;
+            HomeModel model = new HomeModel
+            {
+                MyPost = posts,
+                CurrentPageIndex = page,
+                PageSize = PageSize,
+                TotalCount = totalCount
+            };
 
             return View(model);
         }
@@ -93,48 +98,111 @@ namespace Web_RealEstate.Controllers
             return View("New", objNew);
         }
 
-        public IActionResult AllNews()
+        public IActionResult AllNews(int page = 1)
         {
-            var objNewsList = _newsReposistory.GetAll();
+            int pagesize = 6;
 
-            return View("AllNews", objNewsList);
-        }
+            int totalCount = _newsReposistory.GetTotalCount();
 
-        public IActionResult Project()
-        {
-            HomeModel model = new HomeModel();
+            List<News> news = _newsReposistory.GetAll(page, PageSize);
 
-            List<Post> objPostList = _postReposistory.GetAll();
-            model.MyPost = objPostList;
-
-            List<Property> objPropertyList = _propertyReposistory.GetAll();
-            model.MyProp = objPropertyList;
+            HomeModel model = new HomeModel
+            {
+                MyNews = news,
+                CurrentPageIndex = page,
+                PageSize = PageSize,
+                TotalCount = totalCount
+            };
 
             return View(model);
         }
 
-        public IActionResult Buy()
+        public IActionResult Project(int page = 1)
         {
-            HomeModel model = new HomeModel();
+            int pageSize = 6;
 
             List<Post> objPostList = _postReposistory.GetAll();
-            model.MyPost = objPostList;
 
             List<Property> objPropertyList = _propertyReposistory.GetAll();
-            model.MyProp = objPropertyList;
+
+            // Filter the posts based on the Property's CategoryId
+            List<Post> filteredPosts = objPostList.Where(p => objPropertyList.Any(prop => prop.Id == p.RealEstateId && prop.CategoryId == 2)).ToList();
+
+            int totalCount = filteredPosts.Count;
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            List<Post> posts = filteredPosts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            HomeModel model = new HomeModel
+            {
+                MyPost = posts,
+                CurrentPageIndex = page,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
 
             return View(model);
         }
 
-        public IActionResult Rent()
+        public IActionResult Buy(int page = 1)
         {
-            HomeModel model = new HomeModel();
+            int pageSize = 6;
 
             List<Post> objPostList = _postReposistory.GetAll();
-            model.MyPost = objPostList;
 
             List<Property> objPropertyList = _propertyReposistory.GetAll();
-            model.MyProp = objPropertyList;
+
+            // Filter the posts based on the Property's CategoryId for buying properties
+            List<Post> filteredPosts = objPostList.Where(p => objPropertyList.Any(prop => prop.Id == p.RealEstateId && prop.CategoryId == 3)).ToList();
+
+            int totalCount = filteredPosts.Count;
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            List<Post> posts = filteredPosts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            HomeModel model = new HomeModel
+            {
+                MyPost = posts,
+                CurrentPageIndex = page,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
+
+            return View(model);
+        }
+
+        public IActionResult Rent(int page = 1)
+        {
+            int pageSize = 6;
+
+            List<Post> objPostList = _postReposistory.GetAll();
+
+            List<Property> objPropertyList = _propertyReposistory.GetAll();
+
+            // Filter the posts based on the Property's CategoryId for rental properties
+            List<Post> filteredPosts = objPostList.Where(p => objPropertyList.Any(prop => prop.Id == p.RealEstateId && prop.CategoryId == 4)).ToList();
+
+            int totalCount = filteredPosts.Count;
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            List<Post> posts = filteredPosts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            HomeModel model = new HomeModel
+            {
+                MyPost = posts,
+                CurrentPageIndex = page,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
 
             return View(model);
         }
@@ -241,10 +309,16 @@ namespace Web_RealEstate.Controllers
         public IActionResult Register(LoginUser loginUser)
         {
             var existingUser = _userReposistory.GetExistingUser(loginUser.UserName);
+            var existingEmail = _userReposistory.GetExistingEmail(loginUser.Email);
 
             if (existingUser != null)
             {
-                TempData["ErrorMessage"] = "Username already exists. Please choose a different username!";
+                TempData["NameMessage"] = "Username already exists. Please choose a different username!";
+                return View(loginUser);
+            }
+            if (existingEmail != null)
+            {
+                TempData["MailMessage"] = "Email already been registered. Try Again !!";
                 return View(loginUser);
             }
             _userReposistory.AddNewUser(loginUser);

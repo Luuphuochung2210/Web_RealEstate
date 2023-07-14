@@ -63,9 +63,10 @@ namespace Web_RealEstate.Reposistory
 
         public void AddNewUser(LoginUser user)
         {
+            user.Name = "";
             user.Status = 1;
             user.Phone = "0";
-            // Add the new user to the database
+
             _ctx.LoginUsers.Add(user);
             _ctx.SaveChanges();
         }
