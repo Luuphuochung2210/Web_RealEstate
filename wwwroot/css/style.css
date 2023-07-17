@@ -1063,7 +1063,7 @@ a {
 .card-body-a {
     z-index: 2;
     transition: all .5s ease-in;
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 0rem 1rem 1rem 1rem;
 }
 
     .card-body-a .price-box {
@@ -2099,7 +2099,7 @@ footer {
     }
 
     .card-header-a .card-title-a {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .card-info .card-info-title {

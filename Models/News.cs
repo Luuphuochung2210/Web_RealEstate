@@ -10,7 +10,6 @@ public partial class News
     public int Id { get; set; }
 
     public DateTime Date { get; set; }
-
     public string Contents { get; set; } = null!;
 
     public string? Title { get; set; }
