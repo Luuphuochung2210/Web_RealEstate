@@ -240,6 +240,7 @@
 <section class="section-agents section-t8">
     <div class="container">
         <div class="row">
+            <link href="~/../../../đồ án 25.6/web_realestate/wwwroot/css/style.css" rel="stylesheet" />
             <div class="col-md-12">
                 <div class="title-wrap d-flex justify-content-between">
                     <div class="title-box">
@@ -353,12 +354,12 @@
                     <div class="carousel-item-c">
                         <div class="card-box-b card-shadow news-box">
                             <div class="img-box-b">
-                                <img src="~/img/@obj.Image" alt="" class="img-b img-fluid">
+                                <img src="~/img/@obj.Image" alt="" class="img-b img-fluid" style="">
                             </div>
                             <div class="card-overlay">
                                 <div class="card-header-b">
                                     <div class="card-title-b">
-                                        <h2 class="title-2">
+                                        <h2 class="title-2" style="text-transform:capitalize">
                                             <a asp-area="" asp-controller="Home" asp-action="New" asp-route-id="@obj.Id">
                                                 @obj.Title
                                             </a>
@@ -570,3 +571,27 @@
     </div>
 </section>
 <!--/ Testimonials End /-->
+
+<style>
+    .img-box-a {
+        height: 300px;
+        overflow: hidden;
+    }
+
+        .img-box-a img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+    .img-box-b {
+        height: 250px;
+        overflow: hidden;
+    }
+
+        .img-box-b img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+</style>

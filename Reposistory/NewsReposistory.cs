@@ -38,6 +38,7 @@ namespace Web_RealEstate.Reposistory
         {
             return _ctx.News.ToList();
         }
+
         // Pagination for ALL NEWS
         public List<News> GetAll(int page, int pageSize)
         {

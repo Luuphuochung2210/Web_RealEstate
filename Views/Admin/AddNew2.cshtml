@@ -24,13 +24,13 @@
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a asp-area="" asp-controller="Admin" asp-action="New">New</a></li>
                                         <li class="breadcrumb-item active">
-                                            <a asp-area="" asp-controller="Admin" asp-action="AddNew">Add New</a>
+                                            <a asp-area="" asp-controller="Admin" asp-action="AddNew2">Add New</a>
                                         </li>
                                     </ol>
                                 </div>
                             </div>
                             <div class="card-body card-block">
-                                <form asp-action="AddNew2" asp-action="Create" class="form-horizontal" enctype="multipart/form-data">
+                                <form asp-action="AddNew2" class="form-horizontal" enctype="multipart/form-data">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
@@ -46,12 +46,8 @@
                                             <label asp-for="Contents" class="control-label"></label>
                                         </div>
                                         <div class="col-12 col-md-9">
-                                            <textarea asp-for="Contents" class="form-control" id="message" rows="5" required
-                                                      maxlength="500" placeholder="Your contents..." name="the-textarea"></textarea>
-                                            <div id="counter" class="float-right">
-                                                <span id="current">0</span>
-                                                <span id="maximum">/ 500</span>
-                                            </div>
+                                            <textarea asp-for="Contents" class="form-control" rows="5" required
+                                                      maxlength="500" placeholder="Your contents..."></textarea>
                                         </div>
                                         <span asp-validation-for="Contents" class="text-danger"></span>
                                     </div>
@@ -112,22 +108,3 @@
             });
         </script>
 
-        <script type="text/javascript">
-
-            const messageEle = document.getElementById('message');
-            const counterEle = document.getElementById('counter');
-
-            messageEle.addEventListener('input', function (e) {
-                const target = e.target;
-
-                // Get the `maxlength` attribute
-                const maxLength = target.getAttribute('maxlength');
-
-                // Count the current number of characters
-                const currentLength = target.value.length;
-
-                counterEle.innerHTML = `${currentLength}/${maxLength}`;
-
-
-            });
-        </script>
